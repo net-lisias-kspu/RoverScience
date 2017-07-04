@@ -1,7 +1,7 @@
 RoverScience REVISITED
 ============
 
-**UPDATED RELEASE 2.1.1**
+**UPDATED RELEASE 2.3.0**
 
 RoverScience is a KSP plugin that attempts to add more interactive functionality to the science system FOR rovers. You drive rovers to search for *science spots* which you may then decide to investigate and analyze for science gain.
 
