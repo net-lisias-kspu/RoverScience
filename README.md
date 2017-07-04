@@ -1,5 +1,7 @@
-RoverScience REVISITED
+RoverScience Continued
 ============
+
+Original mod by theSpeare continued by Aelfhe1m
 
 **UPDATED RELEASE 2.3.0**
 
