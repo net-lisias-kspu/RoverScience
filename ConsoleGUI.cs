@@ -1,8 +1,10 @@
-﻿using System;
+﻿using KSP.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+
 
 namespace RoverScience
 {
@@ -61,16 +63,16 @@ namespace RoverScience
 
         private string predictionFontColor(double percentage)
         {
-            if (percentage > 70) return setRichColor(percentage.ToString() + "%", "green");
-            else if (percentage >= 50) return setRichColor(percentage.ToString() + "%", "yellow");
-            else return setRichColor(percentage.ToString() + "%", "red");
+            if (percentage > 70) return setRichColor(Localizer.Format("#LOC_RoverScience_GUI_Percentage", percentage.ToString()), "green");
+            else if (percentage >= 50) return setRichColor(Localizer.Format("#LOC_RoverScience_GUI_Percentage", percentage.ToString()), "yellow");
+            else return setRichColor(Localizer.Format("#LOC_RoverScience_GUI_Percentage", percentage.ToString()), "red");
         }
 
         private string decayFontColor (double percentage)
         {
-            if (percentage > 70) return setRichColor(percentage.ToString() + "%", "red");
-            else if (percentage >= 50) return setRichColor(percentage.ToString() + "%", "yellow");
-            else return setRichColor(percentage.ToString() + "%", "green");
+            if (percentage > 70) return setRichColor(Localizer.Format("#LOC_RoverScience_GUI_Percentage", percentage.ToString()), "red");
+            else if (percentage >= 50) return setRichColor(Localizer.Format("#LOC_RoverScience_GUI_Percentage", percentage.ToString()), "yellow");
+            else return setRichColor(Localizer.Format("#LOC_RoverScience_GUI_Percentage", percentage.ToString()), "green");
         }
 
 
@@ -101,13 +103,13 @@ namespace RoverScience
 
             GUILayout.BeginHorizontal(); GUILayout.FlexibleSpace();
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Science Spots Analyzed: ", boldFont);
+            GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_SpotsAnalyzed") , boldFont); // "Science Spots Analyzed: "
             GUILayout.Label(roverScience.amountOfTimesAnalyzed.ToString(), boldFont);
             GUILayout.EndHorizontal();
             GUILayout.FlexibleSpace(); GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal(); GUILayout.FlexibleSpace();
-            GUILayout.Label("Science Loss due to re-use: " + decayFontColor(roverScience.scienceDecayPercentage), boldFont);
+            GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_ReuseLoss") + decayFontColor(roverScience.scienceDecayPercentage), boldFont); // "Science Loss due to re-use: "
             GUILayout.FlexibleSpace(); GUILayout.EndHorizontal();
 
             GUICenter("_____________________");
@@ -115,11 +117,11 @@ namespace RoverScience
 
             if (!rover.landingSpot.established)
             {
-                GUILayout.Label("> No landing spot established!");
-                GUILayout.Label("> You must first establish a landing spot by landing somewhere. Make sure you have wheels!");
+                GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_NoLanding")); // > No landing spot established!
+                GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_NoLandingWheels")); // > You must first establish a landing spot by landing somewhere. Make sure you have wheels!
                 GUIBreakline();
-                GUILayout.Label("> Rover wheels detected: " + rover.numberWheels);
-                GUILayout.Label("> Rover wheels landed: " + rover.numberWheelsLanded);
+                GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_WheelsDetected", rover.numberWheels)); // > Rover wheels detected: <<1>> 
+                GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_WheelsLanded", rover.numberWheelsLanded)); // > Rover wheels landed: <<1>> 
 
             } else {
                 if (!rover.scienceSpot.established)
@@ -128,10 +130,10 @@ namespace RoverScience
 
                     if (roverScience.scienceDecayPercentage >= 100)
                     {
-                        GUILayout.Label(setRichColor("> You have analyzed too many times.\n> Science loss is now at 100%.\n> Send another rover.", "red"));
+                        GUILayout.Label(setRichColor(Localizer.GetStringByTag("#LOC_RoverScience_GUI_ScienceLimit"), "red")); //  > You have analyzed too many times.\n> Science loss is now at 100%.\n> Send another rover.
                     } else {
-                        GUILayout.Label("> Drive around to search for science spots . . .");
-                        GUILayout.Label("> Currently scanning at range: " + rover.maxRadius + "m");
+                        GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_DriveAround")); // > Drive around to search for science spots . . .
+                        GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_ScanningRange", rover.maxRadius)); // > Currently scanning at range: " + rover.maxRadius + "m");
                         //GUILayout.Label("> Total dist. traveled searching: " + Math.Round(rover.distanceTraveledTotal, 2));
                         GUIBreakline();
                         foreach (string line in consolePrintOut)
@@ -141,7 +143,7 @@ namespace RoverScience
 
                         if (vessel.mainBody.bodyName == "Kerbin")
                         {
-                            GUILayout.Label(setRichColor("> WARNING - there is very little rover science for Kerbin!", "red"));
+                            GUILayout.Label(setRichColor(Localizer.GetStringByTag("#LOC_RoverScience_GUI_HomeWorld"), "red")); // > WARNING - there is very little rover science for Kerbin!
                         }
                     }
 
@@ -154,15 +156,15 @@ namespace RoverScience
                         GUILayout.BeginHorizontal(); GUILayout.FlexibleSpace();
                         if (!rover.anomalyPresent)
                         {
-                            GUILayout.Label(setRichColor("[POTENTIAL SCIENCE SPOT]", "yellow"));
+                            GUILayout.Label(setRichColor(Localizer.GetStringByTag("#LOC_RoverScience_GUI_Potential"), "yellow")); // "[POTENTIAL SCIENCE SPOT]"
                         } else
                         {
-                            GUILayout.Label(setRichColor("[ANOMALY DETECTED]", "yellow"));
+                            GUILayout.Label(setRichColor(Localizer.GetStringByTag("#LOC_RoverScience_GUI_Anomaly"), "yellow")); // "[ANOMALY DETECTED]"
                         }
 
                         GUILayout.FlexibleSpace(); GUILayout.EndHorizontal();
 
-                        GUILayout.Label("> Distance to spot (m): " + Math.Round(rover.distanceFromScienceSpot, 1));
+                        GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_DistToSpot", Math.Round(rover.distanceFromScienceSpot, 1))); // "> Distance to spot (m): <<1>>" + );
                         //GUILayout.Label("Bearing of Site (degrees): " + Math.Round(rover.bearingToScienceSpot, 1));
                         //GUILayout.Label("Rover Bearing (degrees): " + Math.Round(rover.heading, 1));
                         //GUILayout.Label("Rel. Bearing (degrees): " + Math.Round(relativeBearing, 1));
@@ -170,12 +172,12 @@ namespace RoverScience
                         if (!rover.anomalyPresent)
                         {
                             //GUILayout.Label("> Science Potential: " + rover.scienceSpot.predictedSpot + " (" + roverScience.currentPredictionAccuracy + "% confident)");
-                            GUILayout.Label("> Science Prediction: " + potentialFontColor(rover.scienceSpot.predictedSpot));
-                            GUILayout.Label("> Prediction is " + predictionFontColor(roverScience.currentPredictionAccuracy) + " confident");
+                            GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_Prediction", potentialFontColor(rover.scienceSpot.predictedSpot))); // > Science Prediction: <<1>>"
+                            GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_Confidence", predictionFontColor(roverScience.currentPredictionAccuracy))); // > Prediction is <<1>> confident");
                         }
                         else
                         {
-                            GUILayout.Label("> ANOMALY DETECTED. Something interesting is nearby . . . the science potential should be very significant");
+                            GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_Anomaly2")); //"> ANOMALY DETECTED. Something interesting is nearby . . . the science potential should be very significant")
                         }
                         //GUIBreakline();
                         //GUIBreakline();
@@ -192,19 +194,19 @@ namespace RoverScience
                     {
 
                         GUILayout.BeginHorizontal(); GUILayout.FlexibleSpace();
-                        GUILayout.Label(setRichColor("[SCIENCE SPOT REACHED]", "green"));
+                        GUILayout.Label(setRichColor(Localizer.GetStringByTag("#LOC_RoverScience_GUI_SpotReached"), "green")); // "[SCIENCE SPOT REACHED]"
                         GUILayout.FlexibleSpace(); GUILayout.EndHorizontal();
 
                         //GUILayout.Label("Total dist. traveled for this spot: " + Math.Round(rover.distanceTraveledTotal, 1));
                         //GUILayout.Label("Distance from landing site: " +
                         //Math.Round(rover.getDistanceBetweenTwoPoints(rover.scienceSpot.location, rover.landingSpot.location), 1));
                         GUILayout.BeginHorizontal();
-                        GUILayout.Label("> Science Potential: " + potentialFontColor(rover.scienceSpot.potentialGenerated) + " (actual)");
+                        GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_ActualPotential", potentialFontColor(rover.scienceSpot.potentialGenerated))); // "> Science Potential: <<1>> (actual)");
                         GUILayout.EndHorizontal();
 
                         GUIBreakline();
 
-                        GUILayout.Label("> NOTE: The more you analyze, the less you will get each time!");
+                        GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_Note")); // "> NOTE: The more you analyze, the less you will get each time!");
                     }
 
                 }
@@ -219,7 +221,7 @@ namespace RoverScience
                
                 if (!analyzeButtonPressedOnce)
                 {
-                    if (GUILayout.Button("Analyze Science", GUILayout.Height(60)))
+                    if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnAnalyze"), GUILayout.Height(60))) // "Analyze Science"
                     {
                         if (roverScience.container.GetStoredDataCount() == 0)
                         {
@@ -231,24 +233,24 @@ namespace RoverScience
                             }
                             else if (!rover.scienceSpotReached)
                             {
-                                ScreenMessages.PostScreenMessage("Cannot analyze - Get to the science spot first!", 3, ScreenMessageStyle.UPPER_CENTER);
+                                ScreenMessages.PostScreenMessage(Localizer.GetStringByTag("#LOC_RoverScience_GUI_GetToSpot"), 3, ScreenMessageStyle.UPPER_CENTER); // "Cannot analyze - Get to the science spot first!"
                             }
                         }
                         else
                         {
-                            ScreenMessages.PostScreenMessage("Cannot analyze - Rover Brain already contains data!", 3, ScreenMessageStyle.UPPER_CENTER);
+                            ScreenMessages.PostScreenMessage(Localizer.GetStringByTag("#LOC_RoverScience_GUI_Full"), 3, ScreenMessageStyle.UPPER_CENTER); // "Cannot analyze - Rover Brain already contains data!"
                         }
                     }
                 }
                 else
                 {
                     GUILayout.BeginHorizontal();
-                    if (GUILayout.Button("Confirm"))
+                    if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnConfirm"))) // "Confirm"
                     {
                         analyzeButtonPressedOnce = false;
                         roverScience.analyzeScienceSample();
                     }
-                    if (GUILayout.Button("Cancel"))
+                    if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnCancel"))) //"Cancel"
                     {
                         analyzeButtonPressedOnce = false;
                     }
@@ -258,7 +260,7 @@ namespace RoverScience
 
             if (rover.scienceSpot.established)
             {
-                if (GUILayout.Button("Reset Science Spot"))
+                if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnResetSpot"))) // "Reset Science Spot"
                 {
                     rover.scienceSpot.established = false;
                     rover.resetDistanceTraveled();
@@ -280,7 +282,8 @@ namespace RoverScience
             inputMaxDistance = GUILayout.TextField(inputMaxDistance, 5, new GUILayoutOption[] { GUILayout.Width(40) });
 
             
-                if (GUILayout.Button("Set Scan Range [Max: " + roverScience.currentMaxDistance + "]")) {
+                if (GUILayout.Button(Localizer.Format("#LOC_RoverScience_GUI_BtnScanRange", roverScience.currentMaxDistance))) // "Set Scan Range [Max: <<1>>]"
+                {
 
                     int inputMaxDistanceInt;
                     bool isNumber = int.TryParse(inputMaxDistance, out inputMaxDistanceInt);
@@ -290,27 +293,27 @@ namespace RoverScience
                     {
                         rover.maxRadius = inputMaxDistanceInt;
                         Debug.Log("Set maxRadius to input: " + rover.maxRadius);
-                        ScreenMessages.PostScreenMessage("Now scanning for science spots at range: " + rover.maxRadius, 3, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Localizer.Format("#LOC_RoverScience_GUI_Scanning", rover.maxRadius), 3, ScreenMessageStyle.UPPER_CENTER); // "Now scanning for science spots at range: <<1>>
                     }
 
                     if (inputMaxDistanceInt > roverScience.currentMaxDistance)
                     {
-                        ScreenMessages.PostScreenMessage("Cannot set scan range over max distance of: " + roverScience.currentMaxDistance, 3, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Localizer.Format("#LOC_RoverScience_GUI_OverMax", roverScience.currentMaxDistance), 3, ScreenMessageStyle.UPPER_CENTER); // "Cannot set scan range over max distance of: <<1>>
                     } else if (inputMaxDistanceInt < 40)
                     {
-                        ScreenMessages.PostScreenMessage("Minimum of 40m scan range is required", 3, ScreenMessageStyle.UPPER_CENTER);
+                        ScreenMessages.PostScreenMessage(Localizer.GetStringByTag("#LOC_RoverScience_GUI_MinRange"), 3, ScreenMessageStyle.UPPER_CENTER); // "Minimum of 40m scan range is required"
                     }
                 }
             }
 
             GUILayout.EndHorizontal();
 
-			if (GUILayout.Button ("Upgrade Menu")) {
+			if (GUILayout.Button (Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgradeMenu"))) { // "Upgrade Menu"
 				upgradeGUI.toggle ();
 			}
 
 			GUILayout.Space (5);
-			if (GUILayout.Button ("Close and Shutdown")) {
+			if (GUILayout.Button (Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnShutdown"))) { // "Close and Shutdown"
 				rover.scienceSpot.established = false;
 				rover.resetDistanceTraveled ();
 				consolePrintOut.Clear ();
@@ -350,24 +353,24 @@ namespace RoverScience
             double absShiftedCurrentHeading = Math.Abs(shiftedCurrentHeading);
 
 			if (absShiftedCurrentHeading < 6) {
-                return "DRIVE FORWARD";
+                return Localizer.GetStringByTag("#LOC_RoverScience_GUI_DriveFwd"); // "DRIVE FORWARD";
             }
 
 			if ((absShiftedCurrentHeading > 174) && (absShiftedCurrentHeading < 186)) {
-                return "TURN AROUND";
+                return Localizer.GetStringByTag("#LOC_RoverScience_GUI_TurnAround"); // "TURN AROUND";
             }
 
 			if (absShiftedCurrentHeading < 180) {
-                return "TURN LEFT";
+                return Localizer.GetStringByTag("#LOC_RoverScience_GUI_TurnLeft"); // "TURN LEFT";
             }
 
 			if (absShiftedCurrentHeading > 180) {
-                return "TURN RIGHT";
+                return Localizer.GetStringByTag("#LOC_RoverScience_GUI_TurnRight"); //  "TURN RIGHT";
             }
 
 
 
-            return "ERROR: FAILED TO RESOLVE DRIVE DIRECTION";
+            return Localizer.GetStringByTag("#LOC_RoverScience_GUI_DirectionError"); // "ERROR: FAILED TO RESOLVE DRIVE DIRECTION";
 
         }
 

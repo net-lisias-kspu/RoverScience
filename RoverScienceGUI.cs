@@ -1,3 +1,4 @@
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,17 +68,17 @@ namespace RoverScience
 		{
             if (consoleGUI.isOpen)
             {
-				consoleGUI.rect = GUILayout.Window(25639814, consoleGUI.rect, drawRoverConsoleGUI, "Rover Terminal - " + roverScience.RSVersion);
+				consoleGUI.rect = GUILayout.Window(25639814, consoleGUI.rect, drawRoverConsoleGUI, Localizer.Format("#LOC_RoverScience_GUI_TerminalTitle", roverScience.RSVersion)); //  Rover Terminal - <<1>>
 
                 if (upgradeGUI.isOpen)
                 {
-                    upgradeGUI.rect = GUILayout.Window(2389233, upgradeGUI.rect, drawUpgradeGUI, "Upgrade Menu");
+                    upgradeGUI.rect = GUILayout.Window(2389233, upgradeGUI.rect, drawUpgradeGUI, Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgradeMenu")); // Upgrade Menu
                 }
 
             }
             
 			if (debugGUI.isOpen) {
-			    debugGUI.rect = GUILayout.Window (9358921, debugGUI.rect, drawDebugGUI, "Debug");
+			    debugGUI.rect = GUILayout.Window (9358921, debugGUI.rect, drawDebugGUI, Localizer.GetStringByTag("#LOC_RoverScience_GUI_Debug")); // Debug
 			}
 		}
 

@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using KSP;
 using KSP.UI.Screens;
+using KSP.Localization;
 
 namespace RoverScience
 {
@@ -22,7 +23,14 @@ namespace RoverScience
 
         // This is what will be shown as the prediction
         public string predictedSpot = "";
-        private string[] potentialStrings = new string[] { "Very High!", "High", "Normal", "Low", "Very Low!" };
+        private string[] potentialStrings = new string[] {
+            // "Very High!", "High", "Normal", "Low", "Very Low!"
+            Localizer.GetStringByTag("#LOC_RoverScience_GUI_Potential1"),
+            Localizer.GetStringByTag("#LOC_RoverScience_GUI_Potential2"),
+            Localizer.GetStringByTag("#LOC_RoverScience_GUI_Potential3"),
+            Localizer.GetStringByTag("#LOC_RoverScience_GUI_Potential4"),
+            Localizer.GetStringByTag("#LOC_RoverScience_GUI_Potential5")
+        };
 
 
 
@@ -283,7 +291,7 @@ namespace RoverScience
 
             if (anomaly)
             {
-                predictedSpot = "Anomaly detected! There is something very interesting nearby...";
+                predictedSpot = Localizer.GetStringByTag("#LOC_RoverScience_GUI_Anomaly3"); // "Anomaly detected! There is something very interesting nearby...";
             } else if (rNum < predictionAccuracyChance)
             {
                 predictedSpot = potentialGenerated; // (full confidence)

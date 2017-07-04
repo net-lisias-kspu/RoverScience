@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KSP.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,7 +30,7 @@ namespace RoverScience
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label("Science Available: " + currentScience);
+            GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_ScienceAvailable" + currentScience)); // Science Available: <<1>>
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
             
@@ -37,7 +38,7 @@ namespace RoverScience
             drawUpgradeType(RSUpgrade.predictionAccuracy);
             drawUpgradeType(RSUpgrade.analyzedDecay);
 
-            GUILayout.Label("All upgrades are permanent and apply across all rovers");
+            GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_UpgradesPermanent")); // All upgrades are permanent and apply across all rovers"
             GUILayout.EndVertical();
 			GUI.DragWindow ();
         }
@@ -61,11 +62,11 @@ namespace RoverScience
             
             GUILayout.Label(roverScience.getUpgradeName(upgradeType));
             GUILayout.Space(5);
-            GUILayout.Button("Current: " + upgradeValueNow + " [" + currentLevel + "]");
-            GUILayout.Button("Next: " + (upgradeValueNext == "-1" ? "MAX" : upgradeValueNext.ToString()));
-            GUILayout.Button("Cost: " + (upgradeCost == -1 ? "MAX" : upgradeCost.ToString()));
+            GUILayout.Button(Localizer.Format("#LOC_RoverScience_GUI_BtnUpgCurrent", upgradeValueNow, currentLevel)); // Current: <<1>> [<<2>>]
+            GUILayout.Button(Localizer.Format("#LOC_RoverScience_GUI_BtnUpgNext", (upgradeValueNext == "-1" ? Localizer.GetStringByTag("#LOC_RoverScience_GUI_Max") : upgradeValueNext.ToString()))); // Next <<1>>
+            GUILayout.Button(Localizer.Format("#LOC_RoverScience_GUI_BtnUpgCost", (upgradeCost == -1 ? Localizer.GetStringByTag("#LOC_RoverScience_GUI_Max") : upgradeCost.ToString()))); // Cost <<1>>
             
-            if (GUILayout.Button("UP"))
+            if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgrade"))) // UP
             {
 				Debug.Log ("Upgrade button pressed - " + upgradeType);
                 roverScience.upgradeTech(upgradeType);

@@ -1,3 +1,4 @@
+using KSP.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace RoverScience
 	public class RoverScience : PartModule
 	{
 		// Not necessarily updated per build. Mostly updated per major commits
-		public readonly string RSVersion = "2.1.4";
+		public readonly string RSVersion = "2.3.1";
 		public static RoverScience Instance = null;
 		public System.Random rand = new System.Random ();
 		public ModuleScienceContainer container;
@@ -97,14 +98,14 @@ namespace RoverScience
 			}
 		}
 
-		[KSPEvent (guiActive = true, guiName = "Toggle Rover Terminal")]
-		private void showGUI ()
+		[KSPEvent (guiActive = true, guiName = "#LOC_RoverScience_GUI_ToggleTerminal")] // Toggle Rover Terminal
+        private void showGUI ()
 		{
 			roverScienceGUI.consoleGUI.toggle ();
             DrawWaypoint.Instance.toggleMarker();
         }
 
-        [KSPAction ("Activate Console", actionGroup = KSPActionGroup.None)]
+        [KSPAction ("#LOC_RoverScience_GUI_ActivateConsole", actionGroup = KSPActionGroup.None)] // Activate Console
 		private void showGUIAction (KSPActionParam param)
 		{
 			if (IsPrimary)
@@ -280,7 +281,7 @@ namespace RoverScience
 					}
 				} else {
 
-                    ScreenMessages.PostScreenMessage ("Science value was too low - deleting data!", 5, ScreenMessageStyle.UPPER_CENTER);
+                    ScreenMessages.PostScreenMessage ("#LOC_RoverScience_GUI_ScienceTooLow", 5, ScreenMessageStyle.UPPER_CENTER); // Science value was too low - deleting data!
 				}
 
 				rover.scienceSpot.reset ();
@@ -334,13 +335,13 @@ namespace RoverScience
 		private float getBodyScienceScalar (string currentBodyName)
 		{
 			switch (currentBodyName) {
-			case "Kerbin":
+			case "Kerbin": // TODO: Generalize to HomeWorld
 				return 0.01f;
-			case "Sun":
+			case "Sun": // TODO: Generalize to Parent star
 				return 0;
-			case "Mun":
+			case "Mun": // TODO: Generalize to nearest moon
 				return 0.3f;
-			case "Minmus":
+			case "Minmus": // TODO: Generalize to farther moon
 				return 0.2f;
 			default:
 				return 1;
@@ -353,17 +354,17 @@ namespace RoverScience
 			float scienceCap = 1500;
 
 			switch (currentBodyName) {
-			case "Kerbin":
-				scalar = 0.09f;
+			case "Kerbin": // TODO: Generalize to HomeWorld
+                scalar = 0.09f;
 				break;
-			case "Sun":
-				scalar = 0f;
+			case "Sun": // TODO: Generalize to Parent star
+                scalar = 0f;
 				break;
-			case "Mun":
-				scalar = 0.3f;
+			case "Mun": // TODO: Generalize to nearest moon
+                scalar = 0.3f;
 				break;
-			case "Minmus":
-				scalar = 0.2f;
+			case "Minmus": // TODO: Generalize to farther moon
+                scalar = 0.2f;
 				break;
 			default:
 				scalar = 1f;
@@ -378,13 +379,13 @@ namespace RoverScience
             switch (upgrade)
             {
                 case (RSUpgrade.maxDistance):
-                    return "Max Scan Distance";
+                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_MaxScanDistance"); //  "Max Scan Distance";
                 case (RSUpgrade.predictionAccuracy):
-                    return "Prediction Accuracy";
+                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_PrecisionAccuracy"); // "Prediction Accuracy";
                 case (RSUpgrade.analyzedDecay):
-                    return "Analyzed Decay Limit";
+                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_DecayLimit"); // "Analyzed Decay Limit";
                 default:
-                    return "Failed to resolve getUpgradeName";
+                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_ErrorUpgradeName"); // "Failed to resolve getUpgradeName";
             }
 
         }
@@ -436,31 +437,31 @@ namespace RoverScience
                 case (RSUpgrade.maxDistance):
                     if (levelMaxDistance >= maximum_levelMaxDistance)
                     {
-                        return "MAX";
+                        return Localizer.GetStringByTag("#LOC_RoverScience_GUI_Max"); // "MAX";
                     }
                     else
                     {
-                        return (getUpgradeValue(RSUpgrade.maxDistance, level) + "m");
+                        return Localizer.Format("#LOC_RoverScience_GUI_Metres", getUpgradeValue(RSUpgrade.maxDistance, level)); // <<1>>m
                     }
 
                 case (RSUpgrade.predictionAccuracy):
                     if (levelPredictionAccuracy >= maximum_predictionAccuracy)
                     {
-                        return "MAX";
+                        return Localizer.GetStringByTag("#LOC_RoverScience_GUI_Max"); // "MAX";
                     }
                     else
                     {
-                        return (getUpgradeValue(RSUpgrade.predictionAccuracy, level) + "%");
+                        return Localizer.Format("#LOC_RoverScience_GUI_Percentage", getUpgradeValue(RSUpgrade.predictionAccuracy, level)); // <<1>>%
                     }
 
                 case (RSUpgrade.analyzedDecay):
                     if (levelAnalyzedDecay >= maximum_levelAnalyzedDecay)
                     {
-                        return "MAX";
+                        return Localizer.GetStringByTag("#LOC_RoverScience_GUI_Max"); // "MAX";
                     }
                     else
                     {
-                        return (getUpgradeValue(RSUpgrade.analyzedDecay, level) + "n");
+                        return Localizer.Format("#LOC_RoverScience_GUI_nvalue", getUpgradeValue(RSUpgrade.analyzedDecay, level)); // <<1>>n
                     }
 
                 default:
@@ -563,16 +564,14 @@ namespace RoverScience
             // MAX LEVEL REACHED
             if (currentLevel >= maxLevel)
             {
-                ScreenMessages.PostScreenMessage("Max Level reached for this upgrade",
-                    3, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage(Localizer.GetStringByTag("#LOC_RoverScience_GUI_MaxUpgradeLevel"), 3, ScreenMessageStyle.UPPER_CENTER); // Max Level reached for this upgrade
 				return;
             }
             
             // NOT ENOUGH SCIENCE
             if (nextCost > ResearchAndDevelopment.Instance.Science)
             {
-                ScreenMessages.PostScreenMessage("Not enough science to upgrade", 
-                    3, ScreenMessageStyle.UPPER_CENTER);
+                ScreenMessages.PostScreenMessage(Localizer.GetStringByTag("#LOC_RoverScience_GUI_NotEnoughScience"), 3, ScreenMessageStyle.UPPER_CENTER); // "Not enough science to upgrade"
                 return;
             }
 
@@ -591,8 +590,7 @@ namespace RoverScience
             
             ResearchAndDevelopment.Instance.CheatAddScience(-nextCost);
 
-            ScreenMessages.PostScreenMessage(("" + upgradeName + " has been upgraded"),
-                    3, ScreenMessageStyle.UPPER_CENTER);
+            ScreenMessages.PostScreenMessage(Localizer.Format("#LOC_RoverScience_GUI_UpgradeMessage", upgradeName), 3, ScreenMessageStyle.UPPER_CENTER); // <<1>> has been upgraded"
         }
 
         public void setScienceMaxRadiusBoost(int maxRadius)
