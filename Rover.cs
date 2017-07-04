@@ -35,35 +35,35 @@ namespace RoverScience
 
         public List<string> anomaliesAnalyzed = new List<string>();
 
-		public double distanceFromLandingSpot
+		public double DistanceFromLandingSpot
 		{
 			get{
-				return getDistanceBetweenTwoPoints (location, landingSpot.location);
+				return GetDistanceBetweenTwoPoints (location, landingSpot.location);
 			}
 		}
 
-		public double distanceFromScienceSpot
+		public double DistanceFromScienceSpot
 		{
 			get{
-                return getDistanceBetweenTwoPoints(location, scienceSpot.location);
+                return GetDistanceBetweenTwoPoints(location, scienceSpot.location);
 			}
 		}
 
-		public double bearingToScienceSpot
+		public double BearingToScienceSpot
 		{
 			get {
-                return getBearingFromCoords(scienceSpot.location);
+                return GetBearingFromCoords(scienceSpot.location);
 			}
 		}   
 
-		Vessel vessel
+		Vessel Vessel
 		{
 			get{
 				return FlightGlobals.ActiveVessel;
 			}
 		}
 
-        RoverScience roverScience
+        RoverScience RoverScience
         {
             get
             {
@@ -71,18 +71,18 @@ namespace RoverScience
             }
         }
 
-		public double heading
+		public double Heading
 		{
 			get{
-				return getRoverHeading ();
+				return GetRoverHeading ();
 			}
 		}
 
-		public bool scienceSpotReached
+		public bool ScienceSpotReached
 		{
 			get {
 				if (scienceSpot.established) {
-					if (distanceFromScienceSpot <= scienceSpot.minDistance) {
+					if (DistanceFromScienceSpot <= scienceSpot.minDistance) {
 						return true;
 					}
 				}
@@ -90,13 +90,13 @@ namespace RoverScience
 			}
 		}
 
-        public bool anomalySpotReached
+        public bool AnomalySpotReached
         {
             get
             {
                 if (scienceSpot.established)
                 {
-                    if (distanceToClosestAnomaly <= scienceSpot.minDistance)
+                    if (DistanceToClosestAnomaly <= scienceSpot.minDistance)
                     {
                         return true;
                     }
@@ -105,62 +105,62 @@ namespace RoverScience
             }
         }
 
-        public bool anomalyPresent
+        public bool AnomalyPresent
         {
             get
             {
-                return ((distanceToClosestAnomaly <= 100) && !Anomalies.Instance.hasCurrentAnomalyBeenAnalyzed());
+                return ((DistanceToClosestAnomaly <= 100) && !Anomalies.Instance.HasCurrentAnomalyBeenAnalyzed());
             }
         }
 
-        public int numberWheelsLanded
+        public int NumberWheelsLanded
 		{
 			get
 			{
-				return getWheelsLanded();
+				return GetWheelsLanded();
 			}
 		}
 
-        public int numberWheels
+        public int NumberWheels
         {
             get
             {
-                return getWheelCount();
+                return GetWheelCount();
             }
         }
 
-        public bool validStatus
+        public bool ValidStatus
         {
             get
             {
-                return checkRoverValidStatus();
+                return CheckRoverValidStatus();
             }
         }
 
-        public double distanceToClosestAnomaly
+        public double DistanceToClosestAnomaly
         {
             get
             {
-                return getDistanceBetweenTwoPoints(location, closestAnomaly.location);
+                return GetDistanceBetweenTwoPoints(location, closestAnomaly.location);
             }
         }
 
-        public void calculateDistanceTraveled(double deltaTime)
+        public void CalculateDistanceTraveled(double deltaTime)
 		{
-			distanceTraveled += (roverScience.vessel.srfSpeed) * deltaTime;
-            if (!scienceSpot.established) distanceTraveledTotal += (roverScience.vessel.srfSpeed) * deltaTime;
+			distanceTraveled += (RoverScience.vessel.srfSpeed) * deltaTime;
+            if (!scienceSpot.established) distanceTraveledTotal += (RoverScience.vessel.srfSpeed) * deltaTime;
 		}
 
-        public void setRoverLocation()
+        public void SetRoverLocation()
         {
-            location.latitude = vessel.latitude;
-            location.longitude = vessel.longitude;
+            location.latitude = Vessel.latitude;
+            location.longitude = Vessel.longitude;
         }
 
-		public double getDistanceBetweenTwoPoints(COORDS _from, COORDS _to)
+		public double GetDistanceBetweenTwoPoints(COORDS _from, COORDS _to)
 		{
             
-            double bodyRadius = vessel.mainBody.Radius;
+            double bodyRadius = Vessel.mainBody.Radius;
 			double dLat = (_to.latitude - _from.latitude).ToRadians();
 			double dLon = (_to.longitude - _from.longitude).ToRadians();
 			double lat1 = _from.latitude.ToRadians();
@@ -175,7 +175,7 @@ namespace RoverScience
 		}
 
 
-		public double getBearingFromCoords(COORDS target)
+		public double GetBearingFromCoords(COORDS target)
 		{
 			// Rover x,y position
 
@@ -195,33 +195,33 @@ namespace RoverScience
 			return (bearing + 360) % 360;
 		}
 
-		public void resetDistanceTraveled()
+		public void ResetDistanceTraveled()
 		{
 			distanceTraveled = 0;
 		}
 
-        private bool checkRoverValidStatus()
+        private bool CheckRoverValidStatus()
         {   
             // Checks if rover is landed with at least one wheel on with no time-warp.
-            return ((TimeWarp.CurrentRate == 1) && (vessel.horizontalSrfSpeed > (double)0.01) && (numberWheelsLanded > 0));
+            return ((TimeWarp.CurrentRate == 1) && (Vessel.horizontalSrfSpeed > (double)0.01) && (NumberWheelsLanded > 0));
         }
 
-        private double getRoverHeading()
+        private double GetRoverHeading()
 		{
             //Vector3d coM = vessel.findLocalCenterOfMass();
-            Vector3d coM = vessel.localCoM;
-            Vector3d up = (coM - vessel.mainBody.position).normalized;
-			Vector3d north = Vector3d.Exclude(up, (vessel.mainBody.position + 
-				(Vector3d)vessel.mainBody.transform.up * vessel.mainBody.Radius) - coM).normalized;
+            Vector3d coM = Vessel.localCoM;
+            Vector3d up = (coM - Vessel.mainBody.position).normalized;
+			Vector3d north = Vector3d.Exclude(up, (Vessel.mainBody.position + 
+				(Vector3d)Vessel.mainBody.transform.up * Vessel.mainBody.Radius) - coM).normalized;
 
 			Quaternion rotationSurface = Quaternion.LookRotation(north, up);
-			Quaternion rotationVesselSurface = Quaternion.Inverse(Quaternion.Euler(90, 0, 0) * Quaternion.Inverse(vessel.GetTransform().rotation) * rotationSurface);
+			Quaternion rotationVesselSurface = Quaternion.Inverse(Quaternion.Euler(90, 0, 0) * Quaternion.Inverse(Vessel.GetTransform().rotation) * rotationSurface);
 			return rotationVesselSurface.eulerAngles.y;
 		}
 
 
 
-        private int getWheelCount()
+        private int GetWheelCount()
 		{
 			int wheelCount = 0;
 
@@ -239,7 +239,7 @@ namespace RoverScience
 		}
 
 
-		private int getWheelsLanded()
+		private int GetWheelsLanded()
 		{
 			int count = 0;
 			List<Part> vesselParts = FlightGlobals.ActiveVessel.Parts; 
@@ -259,17 +259,17 @@ namespace RoverScience
         List<Anomalies.Anomaly> anomaliesList = new List<Anomalies.Anomaly>();
         public Anomalies.Anomaly closestAnomaly = new Anomalies.Anomaly();
 
-        public void setClosestAnomaly(string bodyName)
+        public void SetClosestAnomaly(string bodyName)
         {
             // this is run on establishing landing spot (to avoid expensive constant foreach loops
 
-            setRoverLocation(); // (update rover location)
+            SetRoverLocation(); // (update rover location)
             double distanceClosest = 0;
             double distanceCheck = 0;
 
-            if (Anomalies.Instance.hasAnomalies(bodyName))
+            if (Anomalies.Instance.HasAnomalies(bodyName))
             {
-                anomaliesList = Anomalies.Instance.getAnomalies(bodyName);
+                anomaliesList = Anomalies.Instance.GetAnomalies(bodyName);
 
                 closestAnomaly = anomaliesList[0]; // set initial
 
@@ -277,8 +277,8 @@ namespace RoverScience
                 int i = 0;
                 foreach (Anomalies.Anomaly anomaly in anomaliesList)
                 {
-                    distanceClosest = getDistanceBetweenTwoPoints(location, closestAnomaly.location);
-                    distanceCheck = getDistanceBetweenTwoPoints(location, anomaly.location);
+                    distanceClosest = GetDistanceBetweenTwoPoints(location, closestAnomaly.location);
+                    distanceCheck = GetDistanceBetweenTwoPoints(location, anomaly.location);
 
                     //Debug.Log("========" + i + "========");
                     //Debug.Log("distanceClosest: " + distanceClosest);
@@ -298,10 +298,10 @@ namespace RoverScience
                     i++;
                 }
 
-                distanceClosest = getDistanceBetweenTwoPoints(location, closestAnomaly.location);
+                distanceClosest = GetDistanceBetweenTwoPoints(location, closestAnomaly.location);
                 Debug.Log("======= RS: closest anomaly details =======");
                 Debug.Log("long/lat: " + closestAnomaly.location.longitude + "/" + closestAnomaly.location.latitude);
-                Debug.Log("instantaneous distance: " + getDistanceBetweenTwoPoints(location, closestAnomaly.location));
+                Debug.Log("instantaneous distance: " + GetDistanceBetweenTwoPoints(location, closestAnomaly.location));
                 Debug.Log("id: " + closestAnomaly.id);
                 Debug.Log("name: " + closestAnomaly.name);
                 Debug.Log("=== RS: closest anomaly details <<END>>====");

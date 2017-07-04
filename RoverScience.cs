@@ -30,19 +30,19 @@ namespace RoverScience
         public readonly int maximum_predictionAccuracy = 5;
         public readonly int maximum_levelAnalyzedDecay = 5;
 
-        public double currentPredictionAccuracy
+        public double CurrentPredictionAccuracy
         {
             get
             {
-				return getUpgradeValue(RSUpgrade.predictionAccuracy, levelPredictionAccuracy);
+				return GetUpgradeValue(RSUpgrade.predictionAccuracy, levelPredictionAccuracy);
             }
         }
 
-		public double currentMaxDistance
+		public double CurrentMaxDistance
         {
             get
             {
-				return getUpgradeValue(RSUpgrade.maxDistance, levelMaxDistance);
+				return GetUpgradeValue(RSUpgrade.maxDistance, levelMaxDistance);
             }
         }
 
@@ -58,7 +58,7 @@ namespace RoverScience
 		public int amountOfTimesAnalyzed = 0;
 		// Leave this alone. PartModule has its own vessel class which SHOULD do the job but
 		// for some reason removing this seemed to destroy a lot of function
-		Vessel vessel {
+		Vessel Vessel {
 			get {
 				if (HighLogic.LoadedSceneIsFlight) {
 					return FlightGlobals.ActiveVessel;
@@ -72,44 +72,44 @@ namespace RoverScience
 
         public float scienceMaxRadiusBoost = 1;
 
-        public double scienceDecayPercentage
+        public double ScienceDecayPercentage
         {
             get
             {
-                return Math.Round((1 - scienceDecayScalar) * 100);
+                return Math.Round((1 - ScienceDecayScalar) * 100);
             }
         }
 
-		public float scienceDecayScalar {
+		public float ScienceDecayScalar {
 			get {
-				return getScienceDecayScalar (amountOfTimesAnalyzed);
+				return GetScienceDecayScalar (amountOfTimesAnalyzed);
 			}
 		}
 
-		public float bodyScienceScalar {
+		public float BodyScienceScalar {
 			get {
-				return getBodyScienceScalar (vessel.mainBody.bodyName);
+				return GetBodyScienceScalar (Vessel.mainBody.bodyName);
 			}
 		}
 
-		public float bodyScienceCap {
+		public float BodyScienceCap {
 			get {
-				return getBodyScienceCap (vessel.mainBody.bodyName);
+				return GetBodyScienceCap (Vessel.mainBody.bodyName);
 			}
 		}
 
 		[KSPEvent (guiActive = true, guiName = "#LOC_RoverScience_GUI_ToggleTerminal")] // Toggle Rover Terminal
-        private void showGUI ()
+        private void ShowGUI ()
 		{
-			roverScienceGUI.consoleGUI.toggle ();
-            DrawWaypoint.Instance.toggleMarker();
+			roverScienceGUI.consoleGUI.Toggle ();
+            DrawWaypoint.Instance.ToggleMarker();
         }
 
         [KSPAction ("#LOC_RoverScience_GUI_ActivateConsole", actionGroup = KSPActionGroup.None)] // Activate Console
-		private void showGUIAction (KSPActionParam param)
+		private void ShowGUIAction (KSPActionParam param)
 		{
 			if (IsPrimary)
-				showGUI ();
+				ShowGUI ();
 		}
 
 		void OnDestroy ()
@@ -119,7 +119,7 @@ namespace RoverScience
 
         public void OnGUI()
         {
-            roverScienceGUI.drawGUI();
+            roverScienceGUI.DrawGUI();
         }
 
         public override void OnLoad (ConfigNode vesselNode)
@@ -135,7 +135,7 @@ namespace RoverScience
 
            // try
             //{
-            if (DB != null)  DB.updateRoverScience();
+            if (DB != null)  DB.UpdateRoverScience();
             //}catch{
             //}
 
@@ -146,7 +146,7 @@ namespace RoverScience
             Debug.Log("RoverScience OnSave @" + DateTime.Now);
             // try
             // {
-            if (DB != null) DB.updateDB();
+            if (DB != null) DB.UpdateDB();
             //} catch
             //{
             //}
@@ -181,11 +181,11 @@ namespace RoverScience
 
                     //try
                     //{
-                    if (DB != null) DB.updateRoverScience();
+                    if (DB != null) DB.UpdateRoverScience();
                     //}
                     //catch { }
 
-                    rover.setClosestAnomaly(vessel.mainBody.bodyName);
+                    rover.SetClosestAnomaly(Vessel.mainBody.bodyName);
 
 
                 } else {
@@ -207,35 +207,35 @@ namespace RoverScience
 
 				if (roverScienceGUI.consoleGUI.isOpen) {
 					// Calculate rover traveled distance
-					if (rover.validStatus)
-						rover.calculateDistanceTraveled (TimeWarp.deltaTime);
+					if (rover.ValidStatus)
+						rover.CalculateDistanceTraveled (TimeWarp.deltaTime);
 
-					rover.landingSpot.setSpot ();
+					rover.landingSpot.SetSpot ();
                     if (rover.landingSpot.established)
                     {
-                        rover.setRoverLocation();
+                        rover.SetRoverLocation();
                     }
 
-                    if ((!rover.scienceSpot.established) && (!rover.scienceSpotReached) && (scienceDecayPercentage < 100))
+                    if ((!rover.scienceSpot.established) && (!rover.ScienceSpotReached) && (ScienceDecayPercentage < 100))
                     {
-                        rover.scienceSpot.checkAndSet();
+                        rover.scienceSpot.CheckAndSet();
                     }
 				}
 			}
-			keyboardShortcuts ();
+			KeyboardShortcuts ();
 		}
 		// Much credit to a.g. as his source helped to figure out how to utilize the experiment and its data
 		// https://github.com/angavrilov/ksp-surface-survey/blob/master/SurfaceSurvey.cs#L276
-		public void analyzeScienceSample ()
+		public void AnalyzeScienceSample ()
 		{
-			if (rover.scienceSpotReached) {
+			if (rover.ScienceSpotReached) {
 
 				ScienceExperiment sciExperiment = ResearchAndDevelopment.GetExperiment ("RoverScienceExperiment");
-				ScienceSubject sciSubject = ResearchAndDevelopment.GetExperimentSubject(sciExperiment, ExperimentSituations.SrfLanded, vessel.mainBody, "", "");
+				ScienceSubject sciSubject = ResearchAndDevelopment.GetExperimentSubject(sciExperiment, ExperimentSituations.SrfLanded, Vessel.mainBody, "", "");
 
 				// 20 science per data
 				sciSubject.subjectValue = 20;
-				sciSubject.scienceCap = bodyScienceCap;
+				sciSubject.scienceCap = BodyScienceCap;
 
 				// Divide by 20 to convert to data form
 				float sciData = (rover.scienceSpot.potentialScience) / sciSubject.subjectValue;
@@ -245,7 +245,7 @@ namespace RoverScience
 
                 // Apply multipliers
 
-                if (rover.anomalySpotReached)
+                if (rover.AnomalySpotReached)
                 {
                     Debug.Log("RS: added anomaly id to save!");
                     Debug.Log("RS: analyzed science at anomaly");
@@ -259,15 +259,15 @@ namespace RoverScience
                 {
                     // if a normal spot, we shall apply factors
                     Debug.Log("RS: analyzed science at science spot");
-                    sciData = sciData * scienceDecayScalar * bodyScienceScalar * scienceMaxRadiusBoost;
+                    sciData = sciData * ScienceDecayScalar * BodyScienceScalar * scienceMaxRadiusBoost;
                 }
                 
 
 
                 Debug.Log("RS: rover.scienceSpot.potentialScience: " + rover.scienceSpot.potentialScience);
                 Debug.Log("RS: sciData (post scalar): " + sciData);
-                Debug.Log("RS: scienceDecayScalar: " + scienceDecayScalar);
-                Debug.Log("RS: bodyScienceScalar: " + bodyScienceScalar);
+                Debug.Log("RS: scienceDecayScalar: " + ScienceDecayScalar);
+                Debug.Log("RS: bodyScienceScalar: " + BodyScienceScalar);
                
 				
 
@@ -284,7 +284,7 @@ namespace RoverScience
                     ScreenMessages.PostScreenMessage ("#LOC_RoverScience_GUI_ScienceTooLow", 5, ScreenMessageStyle.UPPER_CENTER); // Science value was too low - deleting data!
 				}
 
-				rover.scienceSpot.reset ();
+				rover.scienceSpot.Reset ();
 
 			} else {
 				Debug.Log ("Tried to analyze while not at spot?");
@@ -312,7 +312,7 @@ namespace RoverScience
 			return false;
 		}
 
-		private float getScienceDecayScalar(int numberOfTimes)
+		private float GetScienceDecayScalar(int numberOfTimes)
 		{
             // This is the equation that models the decay of science per analysis made
             // y = 1.20^(-0.9*(x-2))
@@ -332,7 +332,7 @@ namespace RoverScience
 
 
 
-		private float getBodyScienceScalar (string currentBodyName)
+		private float GetBodyScienceScalar (string currentBodyName)
 		{
 			switch (currentBodyName) {
 			case "Kerbin": // TODO: Generalize to HomeWorld
@@ -348,7 +348,7 @@ namespace RoverScience
 			}
 		}
        
-        private float getBodyScienceCap (string currentBodyName)
+        private float GetBodyScienceCap (string currentBodyName)
 		{
 			float scalar = 1;
 			float scienceCap = 1500;
@@ -374,27 +374,27 @@ namespace RoverScience
 			return (scalar * scienceCap);
 		}
         
-        public string getUpgradeName(RSUpgrade upgrade)
+        public string GetUpgradeName(RSUpgrade upgrade)
         {
             switch (upgrade)
             {
                 case (RSUpgrade.maxDistance):
-                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_MaxScanDistance"); //  "Max Scan Distance";
+                    return Localizer.GetStringByTag("#LOC_RoverScience_GUI_MaxScanDistance"); //  "Max Scan Distance";
                 case (RSUpgrade.predictionAccuracy):
-                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_PrecisionAccuracy"); // "Prediction Accuracy";
+                    return Localizer.GetStringByTag("#LOC_RoverScience_GUI_PrecisionAccuracy"); // "Prediction Accuracy";
                 case (RSUpgrade.analyzedDecay):
-                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_DecayLimit"); // "Analyzed Decay Limit";
+                    return Localizer.GetStringByTag("#LOC_RoverScience_GUI_DecayLimit"); // "Analyzed Decay Limit";
                 default:
-                    return Localizer.GetStringByTag("LOC_RoverScience_GUI_ErrorUpgradeName"); // "Failed to resolve getUpgradeName";
+                    return Localizer.GetStringByTag("#LOC_RoverScience_GUI_ErrorUpgradeName"); // "Failed to resolve getUpgradeName";
             }
 
         }
 
-        public float getUpgradeCost(RSUpgrade upgrade, int level)
+        public float GetUpgradeCost(RSUpgrade upgrade, int level)
 		{
 
             if (level == 0) level = 1;
-            if (level > getUpgradeMaxLevel(upgrade)) return -1;
+            if (level > GetUpgradeMaxLevel(upgrade)) return -1;
 
 			switch (upgrade)
 			{
@@ -429,7 +429,7 @@ namespace RoverScience
 			}
 		}
 
-        public string getUpgradeValueString(RSUpgrade upgrade, int level)
+        public string GetUpgradeValueString(RSUpgrade upgrade, int level)
         {
             // This will come with unit for display
             switch (upgrade)
@@ -441,7 +441,7 @@ namespace RoverScience
                     }
                     else
                     {
-                        return Localizer.Format("#LOC_RoverScience_GUI_Metres", getUpgradeValue(RSUpgrade.maxDistance, level)); // <<1>>m
+                        return Localizer.Format("#LOC_RoverScience_GUI_Metres", GetUpgradeValue(RSUpgrade.maxDistance, level)); // <<1>>m
                     }
 
                 case (RSUpgrade.predictionAccuracy):
@@ -451,7 +451,7 @@ namespace RoverScience
                     }
                     else
                     {
-                        return Localizer.Format("#LOC_RoverScience_GUI_Percentage", getUpgradeValue(RSUpgrade.predictionAccuracy, level)); // <<1>>%
+                        return Localizer.Format("#LOC_RoverScience_GUI_Percentage", GetUpgradeValue(RSUpgrade.predictionAccuracy, level)); // <<1>>%
                     }
 
                 case (RSUpgrade.analyzedDecay):
@@ -461,7 +461,7 @@ namespace RoverScience
                     }
                     else
                     {
-                        return Localizer.Format("#LOC_RoverScience_GUI_nvalue", getUpgradeValue(RSUpgrade.analyzedDecay, level)); // <<1>>n
+                        return Localizer.Format("#LOC_RoverScience_GUI_nvalue", GetUpgradeValue(RSUpgrade.analyzedDecay, level)); // <<1>>n
                     }
 
                 default:
@@ -469,11 +469,11 @@ namespace RoverScience
             }
         }
 
-        public double getUpgradeValue(RSUpgrade upgrade, int level)
+        public double GetUpgradeValue(RSUpgrade upgrade, int level)
 		{
 
 			if (level == 0) level = 1;
-            if (level > getUpgradeMaxLevel(upgrade)) return -1;
+            if (level > GetUpgradeMaxLevel(upgrade)) return -1;
 
 			switch (upgrade)
 			{
@@ -508,7 +508,7 @@ namespace RoverScience
 			}
 		}
 
-        public int getUpgradeLevel(RSUpgrade upgradeType)
+        public int GetUpgradeLevel(RSUpgrade upgradeType)
         {
             switch (upgradeType)
             {
@@ -523,7 +523,7 @@ namespace RoverScience
             }
         }
 
-        public void setUpgradeLevel(RSUpgrade upgradeType, int newValue)
+        public void SetUpgradeLevel(RSUpgrade upgradeType, int newValue)
         {
                 if (upgradeType == RSUpgrade.maxDistance) {
                     levelMaxDistance = newValue;
@@ -537,7 +537,7 @@ namespace RoverScience
                 }
         }
 
-        public int getUpgradeMaxLevel(RSUpgrade upgradeType)
+        public int GetUpgradeMaxLevel(RSUpgrade upgradeType)
         {
             switch (upgradeType)
             {
@@ -552,14 +552,14 @@ namespace RoverScience
             }
         }
 
-        public void upgradeTech(RSUpgrade upgradeType)
+        public void UpgradeTech(RSUpgrade upgradeType)
         {
 			Debug.Log ("upgradeTech called: " + upgradeType);
-            int nextLevel = getUpgradeLevel(upgradeType) + 1;
-            int currentLevel = getUpgradeLevel(upgradeType);
-            int maxLevel = getUpgradeMaxLevel(upgradeType);
-            float nextCost = getUpgradeCost(upgradeType, nextLevel);
-            string upgradeName = getUpgradeName(upgradeType);
+            int nextLevel = GetUpgradeLevel(upgradeType) + 1;
+            int currentLevel = GetUpgradeLevel(upgradeType);
+            int maxLevel = GetUpgradeMaxLevel(upgradeType);
+            float nextCost = GetUpgradeCost(upgradeType, nextLevel);
+            string upgradeName = GetUpgradeName(upgradeType);
 
             // MAX LEVEL REACHED
             if (currentLevel >= maxLevel)
@@ -593,7 +593,7 @@ namespace RoverScience
             ScreenMessages.PostScreenMessage(Localizer.Format("#LOC_RoverScience_GUI_UpgradeMessage", upgradeName), 3, ScreenMessageStyle.UPPER_CENTER); // <<1>> has been upgraded"
         }
 
-        public void setScienceMaxRadiusBoost(int maxRadius)
+        public void SetScienceMaxRadiusBoost(int maxRadius)
         {
             //maxRadius' maximum value would only ever reach 2km (2000 meters)
             //this method updates the factor used to increase the science depending
@@ -604,19 +604,19 @@ namespace RoverScience
 			scienceMaxRadiusBoost = ((1f / 2000f) * maxRadius) + 1f;
         }
 
-        public void keyboardShortcuts ()
+        public void KeyboardShortcuts ()
 		{
 
 			if (HighLogic.LoadedSceneIsFlight) {
 				// CONSOLE WINDOW
 				if (Input.GetKey (KeyCode.LeftControl) && Input.GetKey (KeyCode.R) && Input.GetKeyUp (KeyCode.S)) {
-					roverScienceGUI.consoleGUI.toggle ();
-                    DrawWaypoint.Instance.toggleMarker();
+					roverScienceGUI.consoleGUI.Toggle ();
+                    DrawWaypoint.Instance.ToggleMarker();
 				}
 
 				// DEBUG WINDOW
 				if (Input.GetKey (KeyCode.RightControl) && Input.GetKeyUp (KeyCode.Keypad5)) {
-					roverScienceGUI.debugGUI.toggle ();
+					roverScienceGUI.debugGUI.Toggle ();
 				}
 			}
 		}
@@ -625,8 +625,8 @@ namespace RoverScience
 		// This is to hopefully prevent multiple instances of this PartModule from running simultaneously
 		public bool IsPrimary {
 			get {
-				if (this.vessel != null) {
-					foreach (Part part in this.vessel.parts) {
+				if (this.Vessel != null) {
+					foreach (Part part in this.Vessel.parts) {
 						if (part.Modules.Contains (this.ClassID)) {
 							if (this.part == part) {
 								return true;

@@ -19,7 +19,7 @@ namespace RoverScience
 				this.roverScience = roverScience;
 		}
 
-        public Rover rover
+        public Rover Rover
         {
             get
             {
@@ -27,7 +27,7 @@ namespace RoverScience
             }
         }
 
-        Vessel vessel
+        Vessel Vessel
         {
             get
             {
@@ -44,44 +44,44 @@ namespace RoverScience
 
         }
 
-        public void setSpot()
+        public void SetSpot()
         {
             // check if LandingSpot has already been established
             if (!established)
             {
                 // SET LANDING SITE
-	                if (rover.numberWheelsLanded > 0)
+	                if (Rover.NumberWheelsLanded > 0)
 	                {
 	                    // set x by y position
-	                    location.longitude = vessel.longitude;
-                        location.latitude = vessel.latitude;
+	                    location.longitude = Vessel.longitude;
+                        location.latitude = Vessel.latitude;
 
-	                    rover.resetDistanceTraveled();
+	                    Rover.ResetDistanceTraveled();
 
 	                    established = true;
 
 	                    Debug.Log("Landing site has been established!");
 
-                        rover.setClosestAnomaly(vessel.mainBody.name);
+                        Rover.SetClosestAnomaly(Vessel.mainBody.name);
 	                }
 			
             }
             else
             {
                 // RESET LANDING SITE
-                if ((rover.numberWheelsLanded == 0) && (vessel.heightFromTerrain > 10)) 
-                    reset();
+                if ((Rover.NumberWheelsLanded == 0) && (Vessel.heightFromTerrain > 10)) 
+                    Reset();
 			}
         }
 
-        public void reset()
+        public void Reset()
         {
             established = false;
             location.longitude = 0;
             location.latitude = 0;
 
-            rover.resetDistanceTraveled();
-            rover.distanceTraveledTotal = 0;
+            Rover.ResetDistanceTraveled();
+            Rover.distanceTraveledTotal = 0;
             Debug.Log("Landing Spot reset!");
         }
     }

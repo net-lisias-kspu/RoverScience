@@ -16,7 +16,7 @@ namespace RoverScience
             Instance = this;
         }
 
-        private RoverScience roverScience
+        private RoverScience RoverScience
         {
             get
             {
@@ -39,7 +39,7 @@ namespace RoverScience
         public List<string> console_x_y_show = new List<string>();
         public List<string> anomaliesAnalyzed = new List<string>();
 
-        public void updateRoverScience()
+        public void UpdateRoverScience()
         {
             // updateRoverScience grabs values from DB
 
@@ -50,24 +50,24 @@ namespace RoverScience
             //Debug.Log(debugS);
             //debugPrintAll("update[RS] - debugPrintAll");
 
-            roverScience.levelMaxDistance = levelMaxDistance;
-            roverScience.levelPredictionAccuracy = levelPredictionAccuracy;
-            roverScience.levelAnalyzedDecay = levelAnalyzedDecay;
+            RoverScience.levelMaxDistance = levelMaxDistance;
+            RoverScience.levelPredictionAccuracy = levelPredictionAccuracy;
+            RoverScience.levelAnalyzedDecay = levelAnalyzedDecay;
 
             if (console_x_y_show.Any())
             {
-                GUI.setWindowPos(GUI.consoleGUI, (float)Convert.ToDouble(console_x_y_show[0]), (float)Convert.ToDouble(console_x_y_show[1]));
+                GUI.SetWindowPos(GUI.consoleGUI, (float)Convert.ToDouble(console_x_y_show[0]), (float)Convert.ToDouble(console_x_y_show[1]));
                 GUI.consoleGUI.isOpen = Convert.ToBoolean(console_x_y_show[2]);
             }
 
             
 
 
-            roverScience.rover.anomaliesAnalyzed = anomaliesAnalyzed;
+            RoverScience.rover.anomaliesAnalyzed = anomaliesAnalyzed;
             Debug.Log("RSR: (RS) Successfully updated RoverScience");
         }
 
-        public void updateDB()
+        public void UpdateDB()
         {
             // updateDB grabs values from RoverScience (updates)
 
@@ -78,24 +78,24 @@ namespace RoverScience
             //debugS += "\nupdateDB - GUI:" + GUI;
             //Debug.Log(debugS);
 
-            debugPrintAll("update[DB] - debugPrintAll");
+            DebugPrintAll("update[DB] - debugPrintAll");
 
-            levelMaxDistance = roverScience.levelMaxDistance;
-            levelPredictionAccuracy = roverScience.levelPredictionAccuracy;
-            levelAnalyzedDecay = roverScience.levelAnalyzedDecay;
+            levelMaxDistance = RoverScience.levelMaxDistance;
+            levelPredictionAccuracy = RoverScience.levelPredictionAccuracy;
+            levelAnalyzedDecay = RoverScience.levelAnalyzedDecay;
             
             console_x_y_show = new List<string>();
             console_x_y_show.Add(GUI.consoleGUI.rect.x.ToString());
             console_x_y_show.Add(GUI.consoleGUI.rect.y.ToString());
             console_x_y_show.Add(GUI.consoleGUI.isOpen.ToString());
 
-            anomaliesAnalyzed = roverScience.rover.anomaliesAnalyzed;
-            Debug.Log("roverScience.rover.anomaliesAnalyzed: " + roverScience.rover.anomaliesAnalyzed);
+            anomaliesAnalyzed = RoverScience.rover.anomaliesAnalyzed;
+            Debug.Log("roverScience.rover.anomaliesAnalyzed: " + RoverScience.rover.anomaliesAnalyzed);
 
             Debug.Log("RSR: (DB) Successfully updated DB");
         }
 
-        public void debugPrintAll(string title = "")
+        public void DebugPrintAll(string title = "")
         {
             string ds = "======== " + title + " ========";
             ds += "\n(From RoverScience DB: debugPrintAll @ " + DateTime.Now;
@@ -120,7 +120,7 @@ namespace RoverScience
             get { return RoverScienceDB.Instance; }
         }
 
-        private RoverScience roverScience
+        private RoverScience RoverScience
         {
             get
             {
@@ -129,7 +129,7 @@ namespace RoverScience
         }
        
 
-        private RoverScienceGUI.GUIClass consoleGUI
+        private RoverScienceGUI.GUIClass ConsoleGUI
         {
             get
             {
@@ -149,7 +149,7 @@ namespace RoverScience
 
 
 
-            loadAnomaliesAnalyzed(node); // load anomalies
+            LoadAnomaliesAnalyzed(node); // load anomalies
             
 
             // LEVELMAXDISTANCE
@@ -202,7 +202,7 @@ namespace RoverScience
 
             if (RoverScience.Instance.rover != null)
             {
-                DB.updateRoverScience();
+                DB.UpdateRoverScience();
             }
 
             
@@ -214,7 +214,7 @@ namespace RoverScience
 
             Debug.Log("RoverScienceScenario OnSave @" + DateTime.Now);
 
-            saveAnomaliesAnalyzed(node);
+            SaveAnomaliesAnalyzed(node);
 
             node.SetValue("levelMaxDistance", DB.levelMaxDistance.ToString(), true);
             node.SetValue("levelPredictionAccuracy", DB.levelPredictionAccuracy.ToString(), true);
@@ -226,7 +226,7 @@ namespace RoverScience
             //node.SetValue("levelAnalyzedDecay", roverScience.getUpgradeLevel(RSUpgrade.analyzedDecay).ToString(), true);
         }
 
-        public void saveAnomaliesAnalyzed(ConfigNode node)
+        public void SaveAnomaliesAnalyzed(ConfigNode node)
         {
             Debug.Log("Attempting to save anomalies analyzed");
             List<string> anomaliesAnalyzed = DB.anomaliesAnalyzed;
@@ -246,7 +246,7 @@ namespace RoverScience
             }
         }
 
-        public void loadAnomaliesAnalyzed(ConfigNode node)
+        public void LoadAnomaliesAnalyzed(ConfigNode node)
         {
             if (node.HasValue("anomalies_visited_id"))
             {

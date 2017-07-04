@@ -28,10 +28,10 @@ namespace RoverScience
         {
             Instance = this;
             Debug.Log("RS: Attempted to load anomaly coordinates");
-            loadAnomalies();
+            LoadAnomalies();
         }
 
-        public bool hasCurrentAnomalyBeenAnalyzed()
+        public bool HasCurrentAnomalyBeenAnalyzed()
         {
             Rover rover = RoverScience.Instance.rover;
             string closestAnomalyID = rover.closestAnomaly.id;
@@ -45,7 +45,7 @@ namespace RoverScience
 
         }
 
-        public List<Anomaly> getAnomalies(string bodyName)
+        public List<Anomaly> GetAnomalies(string bodyName)
         {
             if (anomaliesDict.ContainsKey(bodyName))
             {
@@ -57,7 +57,7 @@ namespace RoverScience
             }
         }
 
-        public bool hasAnomalies(string bodyName)
+        public bool HasAnomalies(string bodyName)
         {
             if (anomaliesDict.ContainsKey(bodyName))
             {
@@ -68,7 +68,7 @@ namespace RoverScience
             }
         }
 
-        private void loadAnomalies()
+        private void LoadAnomalies()
         {
             // anomaliesDict contains a list of [Anomaly]s that each contain longitude/latitude, name and id
             // load anomalies from Anomalies.cfg

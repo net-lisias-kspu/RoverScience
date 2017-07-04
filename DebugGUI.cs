@@ -10,7 +10,7 @@ namespace RoverScience
 	{
         private string anomalyVisitedAdd = "1";
 
-		private void drawDebugGUI (int windowID)
+		private void DrawDebugGUI (int windowID)
 		{
 
 			GUILayout.BeginVertical ();
@@ -18,23 +18,23 @@ namespace RoverScience
 			GUILayout.Label (roverScience.RSVersion);
             
             GUILayout.Label ("# Data Stored: " + roverScience.container.GetStoredDataCount ());
-			GUILayout.Label ("distCheck: " + Math.Round(rover.distanceCheck, 2));
-			GUILayout.Label ("distTrav: " + Math.Round(rover.distanceTraveled));
-			GUILayout.Label ("distTravTotal: " + Math.Round(rover.distanceTraveledTotal));
+			GUILayout.Label ("distCheck: " + Math.Round(Rover.distanceCheck, 2));
+			GUILayout.Label ("distTrav: " + Math.Round(Rover.distanceTraveled));
+			GUILayout.Label ("distTravTotal: " + Math.Round(Rover.distanceTraveledTotal));
 			GUIBreakline ();
             GUILayout.Label("levelAnalyzedDecay: " + roverScience.levelAnalyzedDecay);
-            GUILayout.Label ("currentScalarDecay: " + roverScience.scienceDecayScalar);
+            GUILayout.Label ("currentScalarDecay: " + roverScience.ScienceDecayScalar);
 			GUILayout.Label ("scienceDistanceScalarBoost: " + roverScience.scienceMaxRadiusBoost);
 
-			GUILayout.Label ("ScienceSpot potential: " + rover.scienceSpot.potentialGenerated);
+			GUILayout.Label ("ScienceSpot potential: " + Rover.scienceSpot.potentialGenerated);
 
-			GUILayout.Label ("generatedScience: " + rover.scienceSpot.potentialScience);
-			GUILayout.Label ("with decay: " + rover.scienceSpot.potentialScience * roverScience.scienceDecayScalar);
-			GUILayout.Label ("with distanceScalarBoost & decay & bodyScalar: " + rover.scienceSpot.potentialScience * 
-				roverScience.scienceDecayScalar * roverScience.scienceMaxRadiusBoost * roverScience.bodyScienceScalar);
+			GUILayout.Label ("generatedScience: " + Rover.scienceSpot.potentialScience);
+			GUILayout.Label ("with decay: " + Rover.scienceSpot.potentialScience * roverScience.ScienceDecayScalar);
+			GUILayout.Label ("with distanceScalarBoost & decay & bodyScalar: " + Rover.scienceSpot.potentialScience * 
+				roverScience.ScienceDecayScalar * roverScience.scienceMaxRadiusBoost * roverScience.BodyScienceScalar);
 
             GUIBreakline();
-            GUILayout.Label("Distance travelled for spot: " + rover.distanceTraveledTotal);
+            GUILayout.Label("Distance travelled for spot: " + Rover.distanceTraveledTotal);
             
             GUIBreakline();
             GUILayout.Label("consoleGUI height: " + consoleGUI.rect.height);
@@ -42,7 +42,7 @@ namespace RoverScience
             GUIBreakline();
             GUILayout.Label("Closest Anomaly ID: " + roverScience.rover.closestAnomaly.id);
             GUILayout.Label("Closest Anomaly Name: " + roverScience.rover.closestAnomaly.name);
-            GUILayout.Label("Has current anomaly been analyzed? " + "[" + Anomalies.Instance.hasCurrentAnomalyBeenAnalyzed() + "]");
+            GUILayout.Label("Has current anomaly been analyzed? " + "[" + Anomalies.Instance.HasCurrentAnomalyBeenAnalyzed() + "]");
 
 
 
@@ -50,29 +50,29 @@ namespace RoverScience
             anomalyVisitedAdd = GUILayout.TextField(anomalyVisitedAdd, 3, new GUILayoutOption[] { GUILayout.Width(50) });
             if (GUILayout.Button("add anomaly ID"))
             {
-                rover.anomaliesAnalyzed.Add(anomalyVisitedAdd);
+                Rover.anomaliesAnalyzed.Add(anomalyVisitedAdd);
             }
             if (GUILayout.Button("X"))
             {
-                rover.anomaliesAnalyzed.Clear();
+                Rover.anomaliesAnalyzed.Clear();
             }
             GUILayout.EndHorizontal();
-            GUILayout.Label("anomaly id visited: " + string.Join(",", rover.anomaliesAnalyzed.ToArray()));
+            GUILayout.Label("anomaly id visited: " + string.Join(",", Rover.anomaliesAnalyzed.ToArray()));
 
 
 
 
 			if (GUILayout.Button ("Find Science Spot")) {
-				rover.scienceSpot.setLocation (random: true);
+				Rover.scienceSpot.SetLocation (random: true);
 			}
             
 
 
             if (GUILayout.Button ("Cheat Spot Here")) {
-				if ((!rover.scienceSpot.established) && (consoleGUI.isOpen)) {
-					rover.scienceSpot.setLocation (vessel.longitude, vessel.latitude);
-				} else if (rover.scienceSpot.established){
-					rover.scienceSpot.reset ();
+				if ((!Rover.scienceSpot.established) && (consoleGUI.isOpen)) {
+					Rover.scienceSpot.SetLocation (Vessel.longitude, Vessel.latitude);
+				} else if (Rover.scienceSpot.established){
+					Rover.scienceSpot.Reset ();
 				}
 			}
 
@@ -169,7 +169,7 @@ namespace RoverScience
 
 			GUIBreakline ();
 			if (GUILayout.Button ("Close Window")) {
-				debugGUI.hide ();
+				debugGUI.Hide ();
 			}
 
 			GUILayout.EndVertical ();

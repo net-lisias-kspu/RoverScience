@@ -17,17 +17,17 @@ namespace RoverScience
 
 			public bool isOpen = false;
 
-			public void show()
+			public void Show()
 			{
 				isOpen = true;
 			}
 
-			public void hide()
+			public void Hide()
 			{
 				isOpen = false;
 			}
 
-			public void toggle()
+			public void Toggle()
 			{
 				isOpen = !isOpen;
 			}

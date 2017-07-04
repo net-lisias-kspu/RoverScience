@@ -13,7 +13,7 @@ namespace RoverScience
         // selling and purchasing tech
         // WATCH OUT FOR QUICKSAVE/QUICKLOAD
 
-        private float currentScience
+        private float CurrentScience
         {
            get
            {
@@ -21,46 +21,50 @@ namespace RoverScience
             }
         }
 
-        private void drawUpgradeGUI(int windowID)
+        private void DrawUpgradeGUI(int windowID)
         {
-
+            if (HighLogic.CurrentGame.Mode == Game.Modes.SANDBOX)
+            {
+                ScreenMessages.PostScreenMessage(Localizer.GetStringByTag("#LOC_RoverScience_GUI_NotSandbox"), 3, ScreenMessageStyle.UPPER_CENTER); // Upgrades are not available in sandbox mode
+                return;
+            }
 
             // UPGRADE WINDOW
             GUILayout.BeginVertical();
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_ScienceAvailable" + currentScience)); // Science Available: <<1>>
+            GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_ScienceAvailable" + CurrentScience)); // Science Available: <<1>>
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
             
-            drawUpgradeType(RSUpgrade.maxDistance);
-            drawUpgradeType(RSUpgrade.predictionAccuracy);
-            drawUpgradeType(RSUpgrade.analyzedDecay);
+            DrawUpgradeType(RSUpgrade.maxDistance);
+            DrawUpgradeType(RSUpgrade.predictionAccuracy);
+            DrawUpgradeType(RSUpgrade.analyzedDecay);
 
             GUILayout.Label(Localizer.GetStringByTag("#LOC_RoverScience_GUI_UpgradesPermanent")); // All upgrades are permanent and apply across all rovers"
             GUILayout.EndVertical();
 			GUI.DragWindow ();
         }
 
-        private void drawUpgradeType(RSUpgrade upgradeType)
+        private void DrawUpgradeType(RSUpgrade upgradeType)
         {
 
-            int currentLevel = roverScience.getUpgradeLevel(upgradeType);
+            int currentLevel = roverScience.GetUpgradeLevel(upgradeType);
             int nextLevel = currentLevel + 1;
             //double upgradeValueNow = roverScience.getUpgradeValue(upgradeType, currentLevel);
             //double upgradeValueNext = roverScience.getUpgradeValue(upgradeType, (nextLevel));
 
-            string upgradeValueNow = roverScience.getUpgradeValueString(upgradeType, currentLevel);
-            string upgradeValueNext = roverScience.getUpgradeValueString(upgradeType, (nextLevel));
+            string upgradeValueNow = roverScience.GetUpgradeValueString(upgradeType, currentLevel);
+            string upgradeValueNext = roverScience.GetUpgradeValueString(upgradeType, (nextLevel));
 
-            double upgradeCost = roverScience.getUpgradeCost(upgradeType, (nextLevel));
+            double upgradeCost = roverScience.GetUpgradeCost(upgradeType, (nextLevel));
 
             
 
             GUILayout.BeginHorizontal();
             
-            GUILayout.Label(roverScience.getUpgradeName(upgradeType));
+            GUILayout.Label(roverScience.GetUpgradeName(upgradeType));
             GUILayout.Space(5);
             GUILayout.Button(Localizer.Format("#LOC_RoverScience_GUI_BtnUpgCurrent", upgradeValueNow, currentLevel)); // Current: <<1>> [<<2>>]
             GUILayout.Button(Localizer.Format("#LOC_RoverScience_GUI_BtnUpgNext", (upgradeValueNext == "-1" ? Localizer.GetStringByTag("#LOC_RoverScience_GUI_Max") : upgradeValueNext.ToString()))); // Next <<1>>
@@ -69,7 +73,7 @@ namespace RoverScience
             if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgrade"))) // UP
             {
 				Debug.Log ("Upgrade button pressed - " + upgradeType);
-                roverScience.upgradeTech(upgradeType);
+                roverScience.UpgradeTech(upgradeType);
             }
             
             GUILayout.EndHorizontal();

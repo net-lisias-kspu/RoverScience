@@ -64,20 +64,20 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>rd /s /q "$(SolutionDir)\..\..\KSP\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\..\KSP en\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\..\KSP es\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\..\KSP ja\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\..\KSP zh\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\..\KSP ru\GameData\RoverScience"</PreBuildEvent>
+    <PreBuildEvent>rd /s /q "$(SolutionDir)\..\KSP\GameData\RoverScience"
+rd /s /q "$(SolutionDir)\..\KSP en\GameData\RoverScience"
+rd /s /q "$(SolutionDir)\..\KSP es\GameData\RoverScience"
+rd /s /q "$(SolutionDir)\..\KSP ja\GameData\RoverScience"
+rd /s /q "$(SolutionDir)\..\KSP zh\GameData\RoverScience"
+rd /s /q "$(SolutionDir)\..\KSP ru\GameData\RoverScience"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)Historian.dll"  "$(SolutionDir)\..\GameData\RoverScience" /Y
-(robocopy "$(SolutionDir)\..\GameData\Historian" "$(SolutionDir)\..\..\KSP\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)\..\GameData\Historian" "$(SolutionDir)\..\..\KSP en\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)\..\GameData\Historian" "$(SolutionDir)\..\..\KSP es\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)\..\GameData\Historian" "$(SolutionDir)\..\..\KSP ru\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)\..\GameData\Historian" "$(SolutionDir)\..\..\KSP jp\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)\..\GameData\Historian" "$(SolutionDir)\..\..\KSP zh\GameData\RoverScience" /E /V) ^&amp; exit 0</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetDir)RoverScience.dll"  "$(SolutionDir)GameData\RoverScience" /Y
+(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP\GameData\RoverScience" /E /V) 
+(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP en\GameData\RoverScience" /E /V) 
+(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP es\GameData\RoverScience" /E /V) 
+(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP ru\GameData\RoverScience" /E /V) 
+(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP jp\GameData\RoverScience" /E /V) 
+(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP zh\GameData\RoverScience" /E /V) ^&amp; exit 0</PostBuildEvent>
   </PropertyGroup>
 </Project>

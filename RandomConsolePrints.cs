@@ -14,7 +14,7 @@ namespace RoverScience
 		{
 			List<string> strings = new List<string>();
 
-			public string getRandomPrint()
+			public string GetRandomPrint()
 			{
 				System.Random rand = new System.Random();
 				int randIndex = rand.Next (0, strings.Count);

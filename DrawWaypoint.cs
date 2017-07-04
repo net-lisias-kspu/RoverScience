@@ -42,7 +42,7 @@ namespace RoverScience
             marker.transform.localScale = new Vector3(markerSize, markerSize, markerSize);
             marker.transform.position = FlightGlobals.currentMainBody.GetWorldSurfacePosition(0, 0, 0);
 
-            hideMarker(); // do not render marker yet
+            HideMarker(); // do not render marker yet
 
             // Set marker material, color and alpha
             marker.GetComponent<MeshRenderer>().material = new Material(Shader.Find("Transparent/Diffuse"));
@@ -59,14 +59,14 @@ namespace RoverScience
             if (interestingObject != null) Destroy(interestingObject);
         }
 
-        public void setMarkerLocation(double longitude, double latitude, bool spawningObject = true)
+        public void SetMarkerLocation(double longitude, double latitude, bool spawningObject = true)
         {
             DestroyInterestingObject();
 
             Vector3 bottomPoint = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, 0);
             Vector3 topPoint = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, 1000);
 
-            double surfaceAltitude = getSurfaceAltitude(longitude, latitude);
+            double surfaceAltitude = GetSurfaceAltitude(longitude, latitude);
             Debug.Log("Drawing marker @ (long/lat/alt): " + longitude.ToString() + " " + latitude.ToString() + " " + surfaceAltitude.ToString());
             marker.transform.position = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, surfaceAltitude);
 
@@ -77,10 +77,10 @@ namespace RoverScience
 
             //attempt to get raycast surface altitude
 
-            if (spawningObject) spawnObject(longitude, latitude);
+            if (spawningObject) SpawnObject(longitude, latitude);
         }
 
-        private Vector3 getUpDown(double longitude, double latitude, bool up = true)
+        private Vector3 GetUpDown(double longitude, double latitude, bool up = true)
         {
             double altitude = 20000;
 
@@ -96,7 +96,7 @@ namespace RoverScience
 
         }
 
-        public double getSurfaceAltitude(double longitude, double latitude)
+        public double GetSurfaceAltitude(double longitude, double latitude)
         {
             double altitude = 20000;
             RaycastHit hit;
@@ -115,7 +115,7 @@ namespace RoverScience
             return -1;
         }
 
-        public void showMarker()
+        public void ShowMarker()
         {
             if (RoverScience.Instance.rover.scienceSpot.established)
             {
@@ -123,27 +123,27 @@ namespace RoverScience
             }
         }
 
-        public void hideMarker()
+        public void HideMarker()
         {
             marker.GetComponent<MeshRenderer>().enabled = false;
         }
 
-        public void toggleMarker()
+        public void ToggleMarker()
         {
 
             if (!marker.GetComponent<MeshRenderer>().enabled)
             {
-                showMarker();
+                ShowMarker();
             } else
             {
-                hideMarker();
+                HideMarker();
             }
         }
 
-        private void changeSpherewithDistance(Rover rover)
+        private void ChangeSpherewithDistance(Rover rover)
         {
 
-            float distanceToRover = (float)rover.distanceFromScienceSpot;
+            float distanceToRover = (float)rover.DistanceFromScienceSpot;
 
             // distance to rover 10
             // min distance 3
@@ -183,7 +183,7 @@ namespace RoverScience
         }
 
 
-        public void spawnObject(double longitude, double latitude)
+        public void SpawnObject(double longitude, double latitude)
         {
             try
             {
@@ -197,9 +197,9 @@ namespace RoverScience
                 GameObject.Destroy(test);
 
                 GameObject.Destroy(interestingObject.GetComponent("MeshCollider"));
-                double srfAlt = DrawWaypoint.Instance.getSurfaceAltitude(longitude, latitude);
+                double srfAlt = DrawWaypoint.Instance.GetSurfaceAltitude(longitude, latitude);
                 interestingObject.transform.position = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, srfAlt);
-                interestingObject.transform.up = getUpDown(longitude, latitude, true);
+                interestingObject.transform.up = GetUpDown(longitude, latitude, true);
             } catch
             {
                 Debug.Log("rock model couldn't be found");
@@ -210,7 +210,7 @@ namespace RoverScience
         {
             if (marker.GetComponent<MeshRenderer>().enabled)
             {
-                changeSpherewithDistance(RoverScience.Instance.rover);
+                ChangeSpherewithDistance(RoverScience.Instance.rover);
             }
         }
 

@@ -34,14 +34,14 @@ namespace RoverScience
 		}
        
 
-		private Vessel vessel
+		private Vessel Vessel
 		{
 			get{
 				return FlightGlobals.ActiveVessel;
 			}
 		}
 
-		private Rover rover
+		private Rover Rover
 		{
 			get{
 				return RoverScience.Instance.rover;
@@ -64,31 +64,31 @@ namespace RoverScience
             upgradeGUI.rect.y = consoleGUI.rect.y;
         }
 
-        public void drawGUI()
+        public void DrawGUI()
 		{
             if (consoleGUI.isOpen)
             {
-				consoleGUI.rect = GUILayout.Window(25639814, consoleGUI.rect, drawRoverConsoleGUI, Localizer.Format("#LOC_RoverScience_GUI_TerminalTitle", roverScience.RSVersion)); //  Rover Terminal - <<1>>
+				consoleGUI.rect = GUILayout.Window(25639814, consoleGUI.rect, DrawRoverConsoleGUI, Localizer.Format("#LOC_RoverScience_GUI_TerminalTitle", roverScience.RSVersion)); //  Rover Terminal - <<1>>
 
                 if (upgradeGUI.isOpen)
                 {
-                    upgradeGUI.rect = GUILayout.Window(2389233, upgradeGUI.rect, drawUpgradeGUI, Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgradeMenu")); // Upgrade Menu
+                    upgradeGUI.rect = GUILayout.Window(2389233, upgradeGUI.rect, DrawUpgradeGUI, Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgradeMenu")); // Upgrade Menu
                 }
 
             }
             
 			if (debugGUI.isOpen) {
-			    debugGUI.rect = GUILayout.Window (9358921, debugGUI.rect, drawDebugGUI, Localizer.GetStringByTag("#LOC_RoverScience_GUI_Debug")); // Debug
+			    debugGUI.rect = GUILayout.Window (9358921, debugGUI.rect, DrawDebugGUI, Localizer.GetStringByTag("#LOC_RoverScience_GUI_Debug")); // Debug
 			}
 		}
 
-        public void setWindowPos (GUIClass guiWindow, float x, float y)
+        public void SetWindowPos (GUIClass guiWindow, float x, float y)
         {
             guiWindow.rect.x = x;
             guiWindow.rect.y = y;
         }
 
-		public void addToConsole (string line)
+		public void AddToConsole (string line)
 		{
 			if (consolePrintOut.Count >= 50) {
 				consolePrintOut.Clear ();
@@ -97,12 +97,12 @@ namespace RoverScience
 			scrollPosition.y = 10000;
 		}
 
-		public void addRandomConsoleJunk()
+		public void AddRandomConsoleJunk()
 		{
-			addToConsole (randomConsolePrintOuts.getRandomPrint());
+			AddToConsole (randomConsolePrintOuts.GetRandomPrint());
 		}
 
-		public void clearConsole()
+		public void ClearConsole()
 		{
 			consolePrintOut.Clear ();
 		}

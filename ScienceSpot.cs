@@ -45,13 +45,13 @@ namespace RoverScience
 				this.roverScience = roverScience;
 		}
 
-		public Rover rover {
+		public Rover Rover {
 			get {
 				return roverScience.rover;
 			}
 		}
 
-		public RoverScienceGUI roverScienceGUI
+		public RoverScienceGUI RoverScienceGUI
 		{
 			get
 			{
@@ -59,7 +59,7 @@ namespace RoverScience
 			}
 		}
 
-        Vessel vessel
+        Vessel Vessel
         {
             get
             {
@@ -76,30 +76,30 @@ namespace RoverScience
 
         }
 
-        public enum potentials
+        public enum Potentials
         {
             vhigh, high, normal, low, vlow
         }
 
-        public string getPotentialString(potentials potential)
+        public string GetPotentialString(Potentials potential)
         {
             switch (potential)
             {
-                case (potentials.vhigh):
+                case (Potentials.vhigh):
                     return potentialStrings[0];
-                case (potentials.high):
+                case (Potentials.high):
                     return potentialStrings[1];
-                case (potentials.normal):
+                case (Potentials.normal):
                     return potentialStrings[2];
-                case (potentials.low):
+                case (Potentials.low):
                     return potentialStrings[3];
-                case (potentials.vlow):
+                case (Potentials.vlow):
                     return potentialStrings[4];
             }
             return "Potential string unresolved";
         }
 
-		public void generateScience(bool anomaly = false)
+		public void GenerateScience(bool anomaly = false)
 		{
 			Debug.Log ("generateScience()");
 
@@ -120,30 +120,30 @@ namespace RoverScience
             }
 
 			if (rand.Next (0, 100) < 1) {
-                potentialGenerated = getPotentialString (potentials.vhigh);
+                potentialGenerated = GetPotentialString (Potentials.vhigh);
 				potentialScience = rand.Next (400, 500);
 				return;
 			} 
 
 			if (rand.Next (0, 100) < 8) {
-                potentialGenerated = getPotentialString(potentials.high);
+                potentialGenerated = GetPotentialString(Potentials.high);
 				potentialScience = rand.Next (200, 400);
 				return;
 			} 
 
 			if (rand.Next (0, 100) < 65) {
-                potentialGenerated = getPotentialString(potentials.normal);
+                potentialGenerated = GetPotentialString(Potentials.normal);
 				potentialScience = rand.Next (70, 200);
 				return;
 			} 
 
 			if (rand.Next (0, 100) < 70) {
-                potentialGenerated = getPotentialString(potentials.low);
+                potentialGenerated = GetPotentialString(Potentials.low);
 				potentialScience = rand.Next (30, 70);
 				return;
 			}
 
-            potentialGenerated = getPotentialString(potentials.vlow);
+            potentialGenerated = GetPotentialString(Potentials.vlow);
 			potentialScience = rand.Next (0, 30);
             
 
@@ -151,31 +151,31 @@ namespace RoverScience
 
         // This handles what happens after the distance traveled passes the distance roll
         // If the roll is successful establish a science spot
-		public void checkAndSet()
+		public void CheckAndSet()
         {
             // Once distance traveled passes the random check distance
-            if ((rover.distanceToClosestAnomaly <= 100) && (!Anomalies.Instance.hasCurrentAnomalyBeenAnalyzed()))
+            if ((Rover.DistanceToClosestAnomaly <= 100) && (!Anomalies.Instance.HasCurrentAnomalyBeenAnalyzed()))
             {
-                setLocation(rover.closestAnomaly.location.longitude, rover.closestAnomaly.location.latitude, anomaly: true);
-                rover.resetDistanceTraveled();
+                SetLocation(Rover.closestAnomaly.location.longitude, Rover.closestAnomaly.location.latitude, anomaly: true);
+                Rover.ResetDistanceTraveled();
 
 
-            } else if (rover.distanceTraveled >= rover.distanceCheck)
+            } else if (Rover.distanceTraveled >= Rover.distanceCheck)
             {
 				
-                rover.resetDistanceTraveled();
+                Rover.ResetDistanceTraveled();
 
-                roverScienceGUI.addRandomConsoleJunk();
+                RoverScienceGUI.AddRandomConsoleJunk();
 
                 //Debug.Log("" + rover.distanceCheck + " meter mark reached");
 
                 // Reroll distanceCheck value
-                rover.distanceCheck = rand.Next(20, 50);
+                Rover.distanceCheck = rand.Next(20, 50);
 					
                 // farther you are from established site the higher the chance of striking science!
 
 				int rNum = rand.Next(0, 100);
-				double dist = rover.distanceFromLandingSpot;
+				double dist = Rover.DistanceFromLandingSpot;
 
                 // chanceAlgorithm will be modelled on y = 7 * sqrt(x) with y as chance and x as distance from landingspot
 
@@ -194,13 +194,13 @@ namespace RoverScience
                 if ((double)rNum <= chance)
                 {
 						
-                    setLocation(random: true);
+                    SetLocation(random: true);
 					Debug.Log ("setLocation");
 
-                    roverScienceGUI.clearConsole();
+                    RoverScienceGUI.ClearConsole();
 
-                    Debug.Log("Distance from spot is: " + rover.distanceFromScienceSpot);
-                    Debug.Log("Bearing is: " + rover.bearingToScienceSpot);
+                    Debug.Log("Distance from spot is: " + Rover.DistanceFromScienceSpot);
+                    Debug.Log("Bearing is: " + Rover.BearingToScienceSpot);
                     Debug.Log("Something found");
 							
                 }
@@ -215,20 +215,20 @@ namespace RoverScience
 
         }
 
-        public COORDS generateRandomLocation(int minRadius, int maxRadius)
+        public COORDS GenerateRandomLocation(int minRadius, int maxRadius)
         {
             COORDS randomSpot = new COORDS();
 
             randomRadius = rand.Next(minRadius, maxRadius);
-            roverScience.setScienceMaxRadiusBoost(randomRadius);
+            roverScience.SetScienceMaxRadiusBoost(randomRadius);
 
 
-            double bodyRadius = vessel.mainBody.Radius;
+            double bodyRadius = Vessel.mainBody.Radius;
             double randomAngle = rand.NextDouble() * (double)(1.9);
             double randomTheta = (randomAngle * (Math.PI));
             double angularDistance = randomRadius / bodyRadius;
-            double currentLatitude = vessel.latitude.ToRadians();
-            double currentLongitude = vessel.longitude.ToRadians();
+            double currentLatitude = Vessel.latitude.ToRadians();
+            double currentLongitude = Vessel.longitude.ToRadians();
 
             double spotLat = Math.Asin(Math.Sin(currentLatitude) * Math.Cos(angularDistance) +
                 Math.Cos(currentLatitude) * Math.Sin(angularDistance) * Math.Cos(randomTheta));
@@ -243,7 +243,7 @@ namespace RoverScience
         }
 
         // Method to set location
-        public void setLocation(double longitude = 0, double latitude = 0, bool random = false, bool anomaly = false)
+        public void SetLocation(double longitude = 0, double latitude = 0, bool random = false, bool anomaly = false)
         {
             // generate random radius for where to spot placement
             // bool random will override whatever is entered
@@ -254,17 +254,17 @@ namespace RoverScience
                 location.longitude = longitude;
             } else
             {
-                COORDS randomSpot = generateRandomLocation(rover.minRadius, rover.maxRadius);
+                COORDS randomSpot = GenerateRandomLocation(Rover.minRadius, Rover.maxRadius);
                 location.latitude = randomSpot.latitude;
                 location.longitude = randomSpot.longitude;
             }
 
             established = true;
 
-			this.generateScience(anomaly);
-            predictSpot(anomaly);
+			this.GenerateScience(anomaly);
+            PredictSpot(anomaly);
 
-            rover.distanceTraveledTotal = 0;
+            Rover.distanceTraveledTotal = 0;
 
             //Debug.Log("== setLocation() ==");
             //Debug.Log("randomAngle: " + Math.Round(randomAngle, 4));
@@ -277,15 +277,15 @@ namespace RoverScience
             //Debug.Log("lat/long: " + location.latitude + " " + location.longitude);
             //Debug.Log("==================");
 
-            DrawWaypoint.Instance.setMarkerLocation(location.longitude, location.latitude, spawningObject: !anomaly);
-            DrawWaypoint.Instance.showMarker();
+            DrawWaypoint.Instance.SetMarkerLocation(location.longitude, location.latitude, spawningObject: !anomaly);
+            DrawWaypoint.Instance.ShowMarker();
         }
 
 
 
-        public void predictSpot(bool anomaly = false)
+        public void PredictSpot(bool anomaly = false)
         {
-            double predictionAccuracyChance = roverScience.currentPredictionAccuracy;
+            double predictionAccuracyChance = roverScience.CurrentPredictionAccuracy;
 
             int rNum = rand.Next(0, 100);
 
@@ -307,17 +307,17 @@ namespace RoverScience
             Debug.Log("Spot prediction attempted!");
         }
 
-		public void reset()
+		public void Reset()
 		{
 			established = false;
 			potentialScience = 0;
 			location.longitude = 0;
 			location.latitude = 0;
 
-			rover.resetDistanceTraveled ();
-			rover.distanceTraveledTotal = 0;
+			Rover.ResetDistanceTraveled ();
+			Rover.distanceTraveledTotal = 0;
 
-            DrawWaypoint.Instance.hideMarker();
+            DrawWaypoint.Instance.HideMarker();
             DrawWaypoint.Instance.DestroyInterestingObject();
             
         }
