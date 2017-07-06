@@ -34,7 +34,7 @@ namespace RoverScience
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_ScienceAvailable" + CurrentScience)); // Science Available: <<1>>
+            GUILayout.Label(Localizer.Format("#LOC_RoverScience_GUI_ScienceAvailable", CurrentScience)); // Science Available: <<1>>
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
             
