@@ -3,7 +3,7 @@ RoverScience Continued
 
 Original mod by theSpeare continued by Aelfhe1m
 
-**UPDATED RELEASE 2.3.0**
+**UPDATED RELEASE 2.3.2**
 
 RoverScience is a KSP plugin that attempts to add more interactive functionality to the science system FOR rovers. You drive rovers to search for *science spots* which you may then decide to investigate and analyze for science gain.
 
@@ -63,3 +63,17 @@ Initially, rovers are only able to analyze **two** science spots before beginnin
 - **Science spots** detected far away from the _rover_ will have a bonus multiplier added to them. You are rewarded for exploring and reaching far destinations. Bear in mind that a 50% increase to 10 is only 15 -> carefully consider whether the potential (or the prediction) is worth it.
 - Each analysis you commit to will slowly degrade a rover's return of science. For the first 2 analyses you'll get normal values, and anything past that will slowly degrade the amount of science you get back. Soak up those high potentials as much as possible!
 - CTRL + R + S will open the RoverScience menu.
+
+## Credits
+
+* Original mod coding by [theSpeare ](http://forum.kerbalspaceprogram.com/index.php?/profile/62144-thespeare/)
+* [etmoonshade](http://forum.kerbalspaceprogram.com/index.php?/profile/1852-etmoonshade/)
+* [udk_lethal_dose](http://forum.kerbalspaceprogram.com/index.php?/profile/62149-udk_lethal_d0se/)
+* [akron](http://forum.kerbalspaceprogram.com/index.php?/profile/116554-akron/) for Rover Brain parts - modelling and texturing
+* Nat Sum for rock models!
+* Spanish translation by [fitiales](http://forum.kerbalspaceprogram.com/index.php?/profile/66011-fitiales/)
+
+## License
+
+![CC BY-NC-SA](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License](http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB).
