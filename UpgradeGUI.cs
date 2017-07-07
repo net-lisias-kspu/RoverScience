@@ -1,8 +1,4 @@
 ﻿using KSP.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace RoverScience
@@ -72,7 +68,7 @@ namespace RoverScience
             
             if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgrade"))) // UP
             {
-				Debug.Log ("Upgrade button pressed - " + upgradeType);
+                Utilities.Log ("Upgrade button pressed - " + upgradeType);
                 roverScience.UpgradeTech(upgradeType);
             }
             

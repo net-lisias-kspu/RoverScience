@@ -1,11 +1,10 @@
 using System;
-using UnityEngine;
 
 namespace RoverScience
 {
 
-	//ADDONFIX BY MAJIR
-	public class KSPAddonFixed : KSPAddon, IEquatable<KSPAddonFixed>
+    //ADDONFIX BY MAJIR
+    public class KSPAddonFixed : KSPAddon, IEquatable<KSPAddonFixed>
 	{
 		private readonly Type type;
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RoverScience
 {
@@ -10,7 +6,7 @@ namespace RoverScience
     public class LandingSpot
     {
         public bool established = false;
-        public COORDS location = new COORDS();
+        public Coords location = new Coords();
         public System.Random rand = new System.Random();
 		RoverScience roverScience = null;
 
@@ -37,7 +33,7 @@ namespace RoverScience
                 }
                 else
                 {
-                    Debug.Log("Vessel vessel returned null!");
+                    Utilities.Log("LandingSpot.Vessel null - not flight");
                     return null;
                 }
             }
@@ -60,9 +56,9 @@ namespace RoverScience
 
 	                    established = true;
 
-	                    Debug.Log("Landing site has been established!");
+                        Utilities.Log("Landing site has been established!");
 
-                        Rover.SetClosestAnomaly(Vessel.mainBody.name);
+                        Rover.SetClosestAnomaly();
 	                }
 			
             }
@@ -82,7 +78,7 @@ namespace RoverScience
 
             Rover.ResetDistanceTraveled();
             Rover.distanceTraveledTotal = 0;
-            Debug.Log("Landing Spot reset!");
+            Utilities.Log("Landing Spot reset!");
         }
     }
 }

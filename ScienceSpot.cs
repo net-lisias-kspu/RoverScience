@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
-using KSP;
-using KSP.UI.Screens;
 using KSP.Localization;
 
 namespace RoverScience
 {
-	public class ScienceSpot
+    public class ScienceSpot
 	{
 
 		System.Random rand = new System.Random();
-		public COORDS location = new COORDS ();
+		public Coords location = new Coords ();
 
 		public int potentialScience;
         public int randomRadius = 0;
@@ -69,7 +64,7 @@ namespace RoverScience
                 }
                 else
                 {
-                    Debug.Log("Vessel vessel returned null!");
+                    Utilities.Log("ScienceSpot.Vessel null - not flight!");
                     return null;
                 }
             }
@@ -101,7 +96,7 @@ namespace RoverScience
 
 		public void GenerateScience(bool anomaly = false)
 		{
-			Debug.Log ("generateScience()");
+            Utilities.Log ("generateScience()");
 
             // anomaly flag will set a high science value
             if (anomaly)
@@ -160,14 +155,15 @@ namespace RoverScience
                 Rover.ResetDistanceTraveled();
 
 
-            } else if (Rover.distanceTraveled >= Rover.distanceCheck)
+            }
+            else if (Rover.distanceTraveled >= Rover.distanceCheck)
             {
 				
                 Rover.ResetDistanceTraveled();
 
                 RoverScienceGUI.AddRandomConsoleJunk();
 
-                //Debug.Log("" + rover.distanceCheck + " meter mark reached");
+                //Utilities.Log("" + rover.distanceCheck + " meter mark reached");
 
                 // Reroll distanceCheck value
                 Rover.distanceCheck = rand.Next(20, 50);
@@ -184,9 +180,9 @@ namespace RoverScience
 
 				double chance = (chanceAlgorithm < 75) ? chanceAlgorithm : 75;
 
-                Debug.Log ("rNum: " + rNum);
-                Debug.Log ("chance: " + chance);
-				Debug.Log ("rNum <= chance: " + ((double)rNum <= chance));
+                Utilities.Log ("rNum: " + rNum);
+                Utilities.Log ("chance: " + chance);
+                Utilities.Log ("rNum <= chance: " + ((double)rNum <= chance));
 					
                 // rNum is a random number between 0 and 100
                 // chance is the percentage number we check for to determine a successful roll
@@ -195,19 +191,19 @@ namespace RoverScience
                 {
 						
                     SetLocation(random: true);
-					Debug.Log ("setLocation");
+                    Utilities.Log ("setLocation");
 
                     RoverScienceGUI.ClearConsole();
 
-                    Debug.Log("Distance from spot is: " + Rover.DistanceFromScienceSpot);
-                    Debug.Log("Bearing is: " + Rover.BearingToScienceSpot);
-                    Debug.Log("Something found");
+                    Utilities.Log("Distance from spot is: " + Rover.DistanceFromScienceSpot);
+                    Utilities.Log("Bearing is: " + Rover.BearingToScienceSpot);
+                    Utilities.Log("Something found");
 							
                 }
                 else
                 {
                     // Science hotspot not found
-                    Debug.Log("Nothing found!");
+                    Utilities.Log("Nothing found!");
                 }
 
 
@@ -215,9 +211,9 @@ namespace RoverScience
 
         }
 
-        public COORDS GenerateRandomLocation(int minRadius, int maxRadius)
+        public Coords GenerateRandomLocation(int minRadius, int maxRadius)
         {
-            COORDS randomSpot = new COORDS();
+            Coords randomSpot = new Coords();
 
             randomRadius = rand.Next(minRadius, maxRadius);
             roverScience.SetScienceMaxRadiusBoost(randomRadius);
@@ -254,7 +250,7 @@ namespace RoverScience
                 location.longitude = longitude;
             } else
             {
-                COORDS randomSpot = GenerateRandomLocation(Rover.minRadius, Rover.maxRadius);
+                Coords randomSpot = GenerateRandomLocation(Rover.minRadius, Rover.maxRadius);
                 location.latitude = randomSpot.latitude;
                 location.longitude = randomSpot.longitude;
             }
@@ -266,16 +262,16 @@ namespace RoverScience
 
             Rover.distanceTraveledTotal = 0;
 
-            //Debug.Log("== setLocation() ==");
-            //Debug.Log("randomAngle: " + Math.Round(randomAngle, 4));
-            //Debug.Log("randomTheta (radians): " + Math.Round(randomTheta, 4));
-            //Debug.Log("randomTheta (degrees?): " + Math.Round((randomTheta.ToDegrees()), 4));
-            //Debug.Log(" ");
-            //Debug.Log("randomRadius selected: " + randomRadius);
-            //Debug.Log("distance to ScienceSpot: " + rover.distanceFromScienceSpot);
-
-            //Debug.Log("lat/long: " + location.latitude + " " + location.longitude);
-            //Debug.Log("==================");
+            //Utilities.Log("== setLocation() ==");
+            //Utilities.Log("randomAngle: " + Math.Round(randomAngle, 4));
+            //Utilities.Log("randomTheta (radians): " + Math.Round(randomTheta, 4));
+            //Utilities.Log("randomTheta (degrees?): " + Math.Round((randomTheta.ToDegrees()), 4));
+            //Utilities.Log(" ");
+            //Utilities.Log("randomRadius selected: " + randomRadius);
+            //Utilities.Log("distance to ScienceSpot: " + rover.distanceFromScienceSpot);
+              
+            //Utilities.Log("lat/long: " + location.latitude + " " + location.longitude);
+            //Utilities.Log("==================");
 
             DrawWaypoint.Instance.SetMarkerLocation(location.longitude, location.latitude, spawningObject: !anomaly);
             DrawWaypoint.Instance.ShowMarker();
@@ -304,7 +300,7 @@ namespace RoverScience
             }
 
 
-            Debug.Log("Spot prediction attempted!");
+            Utilities.Log("Spot prediction attempted!");
         }
 
 		public void Reset()
