@@ -1,25 +1,20 @@
 ﻿using KSP.Localization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 
 namespace RoverScience
 {
 
-	public partial class RoverScienceGUI
+    public partial class RoverScienceGUI
 	{
+        static GUIStyle consoleAreaStyle = new GUIStyle(HighLogic.Skin.textArea);
+        static GUIStyle boldFont;
+        static GUIStyle noWrapFont;
 
         private bool analyzeButtonPressedOnce = false;
 		private string inputMaxDistance = "100";
 
-        GUIStyle boldFont = new GUIStyle();
-        GUIStyle noWrapFont = new GUIStyle();
-
-
-        
         private string SetRichColor(string s, string color)
         {
             // color to be inputted as "#xxxxxx";
@@ -98,7 +93,7 @@ namespace RoverScience
 
             noWrapFont.wordWrap = false;
 
-            GUILayout.BeginVertical(GUIStyles.consoleArea);
+            GUILayout.BeginVertical(consoleAreaStyle);
             scrollPosition = GUILayout.BeginScrollView(scrollPosition, new GUILayoutOption[] { GUILayout.Width(240), GUILayout.Height(340) });
 
             GUILayout.BeginHorizontal(); GUILayout.FlexibleSpace();
@@ -292,7 +287,7 @@ namespace RoverScience
                     if ((isNumber) && (inputMaxDistanceInt <= roverScience.CurrentMaxDistance) && (inputMaxDistanceInt >= 40))
                     {
                         Rover.maxRadius = inputMaxDistanceInt;
-                        Debug.Log("Set maxRadius to input: " + Rover.maxRadius);
+                        Utilities.Log("Set maxRadius to input: " + Rover.maxRadius);
                         ScreenMessages.PostScreenMessage(Localizer.Format("#LOC_RoverScience_GUI_Scanning", Rover.maxRadius), 3, ScreenMessageStyle.UPPER_CENTER); // "Now scanning for science spots at range: <<1>>
                     }
 

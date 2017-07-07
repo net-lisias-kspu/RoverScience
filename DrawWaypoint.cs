@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-using KSP;
+﻿using UnityEngine;
 
 namespace RoverScience
 {
@@ -32,7 +27,7 @@ namespace RoverScience
 
         private void Start()
         {
-            Debug.Log("Attempting to create sphere");
+            Utilities.Log("Attempting to create scienceSpot sphere");
             Instance = this;
 
             marker = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -51,7 +46,7 @@ namespace RoverScience
             markerGreen.a = markerAlpha; // max alpha
 
             marker.GetComponent<MeshRenderer>().material.color = markerRed; // set to red on awake
-            Debug.Log("Reached end of marker creation");
+            Utilities.Log("Reached end of marker creation");
         }
 
         public void DestroyInterestingObject()
@@ -67,7 +62,7 @@ namespace RoverScience
             Vector3 topPoint = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, 1000);
 
             double surfaceAltitude = GetSurfaceAltitude(longitude, latitude);
-            Debug.Log("Drawing marker @ (long/lat/alt): " + longitude.ToString() + " " + latitude.ToString() + " " + surfaceAltitude.ToString());
+            Utilities.Log("Drawing marker @ (long/lat/alt): " + longitude.ToString() + " " + latitude.ToString() + " " + surfaceAltitude.ToString());
             marker.transform.position = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, surfaceAltitude);
 
             //marker.transform.up = cylinderDirectionUp;
@@ -109,7 +104,7 @@ namespace RoverScience
                 return (altitude - hit.distance);
             } else
             {
-                Debug.Log("RSR: No collision detected!");
+                Utilities.Log("No collision detected!");
             }
 
             return -1;
@@ -179,7 +174,7 @@ namespace RoverScience
                 marker.GetComponent<MeshRenderer>().material.color = markerRed;
             }
 
-            //Debug.Log("dist, dist/50, alpha: [" + distance + " / " + distance / 50 + " / " + markerAlpha + "]");
+            //Utilities.Log("dist, dist/50, alpha: [" + distance + " / " + distance / 50 + " / " + markerAlpha + "]");
         }
 
 
@@ -187,10 +182,10 @@ namespace RoverScience
         {
             try
             {
-                Debug.Log("RSR: Attempting to spawn object");
+                Utilities.Log("Attempting to spawn object");
                 string randomRockName = rockObjectNames[rand.Next(rockObjectNames.Length)];
                 GameObject test = GameDatabase.Instance.GetModel("RoverScience/rock/" + randomRockName);
-                Debug.Log("Random rock name: " + randomRockName);
+                Utilities.Log("Random rock name: " + randomRockName);
                 test.SetActive(true);
 
                 interestingObject = GameObject.Instantiate(test) as GameObject;
@@ -202,7 +197,7 @@ namespace RoverScience
                 interestingObject.transform.up = GetUpDown(longitude, latitude, true);
             } catch
             {
-                Debug.Log("rock model couldn't be found");
+                Utilities.Log("rock model couldn't be found");
             }
         }
         

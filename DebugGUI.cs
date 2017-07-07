@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
 namespace RoverScience
 {
-	public partial class RoverScienceGUI
+    public partial class RoverScienceGUI
 	{
         private string anomalyVisitedAdd = "1";
 
@@ -177,17 +174,5 @@ namespace RoverScience
 			GUI.DragWindow ();
 		}
 
-		private void GUIBreakline ()
-		{
-			GUILayout.BeginHorizontal ();
-			GUILayout.EndHorizontal ();
-		}
-
-        private void GUICenter(string s)
-        {
-            GUILayout.BeginHorizontal(); GUILayout.FlexibleSpace();
-            GUILayout.Label(s);
-            GUILayout.FlexibleSpace(); GUILayout.EndHorizontal();
-        }
     }
 }
