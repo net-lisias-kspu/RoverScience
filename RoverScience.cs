@@ -19,7 +19,7 @@ namespace RoverScience
         private const float FarMoonScienceScalar = 0.2f;
 
         // Not necessarily updated per build. Mostly updated per major commits
-        public readonly string RSVersion = "2.3.1";
+        public readonly string RSVersion = typeof(RoverScience).Assembly.GetName().Version.ToString();
 		public static RoverScience Instance = null;
         public static CelestialBody HomeWorld;
 
