@@ -73,38 +73,83 @@ namespace RoverScience
             // load anomalies from Anomalies.cfg
             try
             {
-                string fileName = KSPUtil.ApplicationRootPath + "GameData/RoverScience/Anomalies.cfg";
-                Utilities.Log("loadAnomlies HAS ATTEMPTED TO LOAD FROM THIS PATH: " + fileName);
+                // reference source from SCANsat
+                //if (anomalies == null)
+                //{
+                //    PQSSurfaceObject[] sites = body.pqsSurfaceObjects;
+                //    anomalies = new SCANanomaly[sites.Length];
+                //    for (int i = 0; i < sites.Length; ++i)
+                //    {
+                //        anomalies[i] = new SCANanomaly(sites[i].SurfaceObjectName
+                //            , body.GetLongitude(sites[i].transform.position)
+                //            , body.GetLatitude(sites[i].transform.position)
+                //            , sites[i]);
+                //    }
+                //}
 
-                ConfigNode mainNode = ConfigNode.Load(fileName);
-
-                foreach (ConfigNode bodyNode in mainNode.GetNodes("BODY"))
+                Utilities.Log("Reading anomalies from game database");
+                var bodies = FlightGlobals.Bodies;
+                int counter;
+                foreach (var body in bodies)
                 {
-                    List<Anomaly> _anomalyList = new List<Anomaly>();
-                    
-                    foreach (ConfigNode anomalyNode in bodyNode.GetNodes("anomaly"))
+                    var anomalies = new List<Anomaly>();
+                    PQSSurfaceObject[] sites = body.pqsSurfaceObjects;
+                    counter = 0;
+                    foreach (var site in sites)
                     {
-                        Anomaly _anomaly = new Anomaly();
-                        string[] latlong = Regex.Split(anomalyNode.GetValue("position"), " : ");
-                        _anomaly.location.latitude = Convert.ToDouble(latlong[0]);
-                        _anomaly.location.longitude = Convert.ToDouble(latlong[1]);
-
-                        if (anomalyNode.HasValue("name"))
-                        {
-                            _anomaly.name = anomalyNode.GetValue("name");
-                        }
-
-                        if (anomalyNode.HasValue("id"))
-                        {
-                            _anomaly.id = anomalyNode.GetValue("id");
-                        }
-
-
-                        _anomalyList.Add(_anomaly);
+                        anomalies.Add( new Anomaly {
+                            id = (++counter).ToString(),
+                            name = site.name,
+                            location = new Coords
+                            {
+                                longitude = body.GetLongitude(site.transform.position),
+                                latitude = body.GetLatitude(site.transform.position)
+                            }
+                        });
                     }
-
-                    anomaliesDict.Add(bodyNode.GetValue("name"), _anomalyList);
+                    if (anomalies.Count > 0)
+                    {
+                        anomaliesDict.Add(body.name, anomalies);
+                        Utilities.Log($"Added {anomalies.Count}  anomalies for body '{body.name}'");
+                    }
                 }
+
+
+                #region Old file based approach
+                //string fileName = KSPUtil.ApplicationRootPath + "GameData/RoverScience/Anomalies.cfg";
+                //Utilities.Log("loadAnomlies HAS ATTEMPTED TO LOAD FROM THIS PATH: " + fileName);
+
+                //ConfigNode mainNode = ConfigNode.Load(fileName);
+
+                //foreach (ConfigNode bodyNode in mainNode.GetNodes("BODY"))
+                //{
+                //    List<Anomaly> _anomalyList = new List<Anomaly>();
+
+                //    foreach (ConfigNode anomalyNode in bodyNode.GetNodes("anomaly"))
+                //    {
+                //        Anomaly _anomaly = new Anomaly();
+                //        string[] latlong = Regex.Split(anomalyNode.GetValue("position"), " : ");
+                //        _anomaly.location.latitude = Convert.ToDouble(latlong[0]);
+                //        _anomaly.location.longitude = Convert.ToDouble(latlong[1]);
+
+                //        if (anomalyNode.HasValue("name"))
+                //        {
+                //            _anomaly.name = anomalyNode.GetValue("name");
+                //        }
+
+                //        if (anomalyNode.HasValue("id"))
+                //        {
+                //            _anomaly.id = anomalyNode.GetValue("id");
+                //        }
+
+
+                //        _anomalyList.Add(_anomaly);
+                //    }
+
+                //    anomaliesDict.Add(bodyNode.GetValue("name"), _anomalyList);
+                //}
+                #endregion
+
             }
             catch
             {
@@ -130,17 +175,6 @@ namespace RoverScience
                 {
                     distanceClosest = GeomLib.GetDistanceBetweenTwoPoints(vessel.mainBody, location, closestAnomaly.location);
                     distanceCheck = GeomLib.GetDistanceBetweenTwoPoints(vessel.mainBody, location, anomaly.location);
-
-                    //Utilities.Log("========" + i + "========");
-                    //Utilities.Log("distanceClosest: " + distanceClosest);
-                    //Utilities.Log("distanceCheck: " + distanceCheck);
-
-                    //Utilities.Log("Current lat/long: " + location.latitude + "/" + location.longitude);
-                    //Utilities.Log("Closest Anomaly lat/long: " + closestAnomaly.location.latitude + "/" + closestAnomaly.location.longitude);
-                    //Utilities.Log("Check Anomaly lat/long: " + anomaly.location.latitude + "/" + anomaly.location.longitude);
-
-                    //Utilities.Log("==========<END>==========");
-
 
                     if (distanceCheck < distanceClosest)
                     {
