@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace RoverScience
 {
@@ -123,11 +122,11 @@ namespace RoverScience
             get
             {
                 if (location == null)
-                    Utilities.Log("location == null in DistanceToClosestAnomaly");
+                    Utilities.LogVerbose("location == null in DistanceToClosestAnomaly");
                 if (closestAnomaly == null)
-                    Utilities.Log("closestAnomaly == null in DistanceToClosestAnomaly");
+                    Utilities.LogVerbose("closestAnomaly == null in DistanceToClosestAnomaly");
                 if (Vessel == null)
-                    Utilities.Log("Vessel == null in DistanceToClosestAnomaly");
+                    Utilities.LogVerbose("Vessel == null in DistanceToClosestAnomaly");
 
                 return GeomLib.GetDistanceBetweenTwoPoints(Vessel.mainBody, location, closestAnomaly.location);
             }

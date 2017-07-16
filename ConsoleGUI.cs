@@ -73,6 +73,12 @@ namespace RoverScience
 
         private void DrawRoverConsoleGUI(int windowID)
         {
+            if (roverScience.part.vessel != FlightGlobals.ActiveVessel)
+            {
+                Utilities.LogVerbose("ConsoleGUI not drawn - not active vessel");
+                return;
+            }
+
             if (Rover.scienceSpot.established && Rover.ScienceSpotReached)
             {
                 consoleGUI.rect.height = 559;

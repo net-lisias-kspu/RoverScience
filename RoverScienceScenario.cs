@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 namespace RoverScience
 {
@@ -18,9 +16,7 @@ namespace RoverScience
         {
             if (RoverScience.Instance == null) return; // do not do if RoverScience not do
 
-            Utilities.Log("RoverScienceScenario OnLoad @" + DateTime.Now);
-
-            Utilities.Log("Attempted to LOAD FILE VIA KSPSCENARIO v2");
+            Utilities.LogVerbose("RoverScienceScenario OnLoad @" + DateTime.Now);
 
             //DB  = RoverScienceDB.Instance;
             //RS = RoverScience.Instance;
@@ -67,13 +63,9 @@ namespace RoverScience
 
                 RoverScienceDB.Instance.console_x_y_show = loadedStringList;
 
-                //consoleGUI.rect.x = (float)Convert.ToDouble(loadedStringList[0]);
-                //consoleGUI.rect.y = (float)Convert.ToDouble(loadedStringList[1]);
-                //consoleGUI.isOpen = Convert.ToBoolean(loadedStringList[2]);
             }
             else
             {
-                //string consoleDetailString = consoleGUI.rect.x + "," + consoleGUI.rect.y + "," + consoleGUI.isOpen;
                 node.AddValue("console_x_y_show", string.Join(",", RoverScienceDB.Instance.console_x_y_show.ToArray()));
             }
 
@@ -97,10 +89,6 @@ namespace RoverScience
             node.SetValue("levelPredictionAccuracy", RoverScienceDB.Instance.levelPredictionAccuracy.ToString(), true);
             node.SetValue("levelAnalyzedDecay", RoverScienceDB.Instance.levelAnalyzedDecay.ToString(), true);
             node.SetValue("console_x_y_show", string.Join(",", RoverScienceDB.Instance.console_x_y_show.ToArray()), true);
-
-            //node.SetValue("levelMaxDistance", roverScience.getUpgradeLevel(RSUpgrade.maxDistance).ToString(), true);
-            //node.SetValue("levelPredictionAccuracy", roverScience.getUpgradeLevel(RSUpgrade.predictionAccuracy).ToString(), true);
-            //node.SetValue("levelAnalyzedDecay", roverScience.getUpgradeLevel(RSUpgrade.analyzedDecay).ToString(), true);
         }
 
         public void SaveAnomaliesAnalyzed(ConfigNode node)
@@ -108,7 +96,7 @@ namespace RoverScience
             Utilities.Log("Attempting to save anomalies analyzed");
             List<string> anomaliesAnalyzed = RoverScienceDB.Instance.anomaliesAnalyzed;
 
-            if (anomaliesAnalyzed.Any())
+            if (anomaliesAnalyzed.Count > 0)
             {
                 if (anomaliesAnalyzed.Count > 1)
                 {
@@ -119,7 +107,7 @@ namespace RoverScience
                 }
             } else
             {
-                Utilities.Log("no anomalies id to save");
+                Utilities.LogVerbose("no anomalies id to save");
             }
         }
 
@@ -130,18 +118,18 @@ namespace RoverScience
                 string loadedString = node.GetValue("anomalies_visited_id");
                 List<string> loadedStringList = new List<string>(loadedString.Split(','));
 
-                Utilities.Log("loadedString: " + loadedString);
+                Utilities.LogVerbose("loadedString: " + loadedString);
                 foreach (string s in loadedStringList)
                 {
-                    Utilities.Log("ID: " + s);
+                    Utilities.LogVerbose("ID: " + s);
                 }
-                Utilities.Log("ID LOAD END");
+                Utilities.LogVerbose("ID LOAD END");
                 RoverScienceDB.Instance.anomaliesAnalyzed = loadedStringList; // load in new values in anomalies
                 
             }
             else
             {
-                Utilities.Log("No anomalies have been analyzed");
+                Utilities.LogVerbose("No anomalies have been analyzed");
             }
 
         }

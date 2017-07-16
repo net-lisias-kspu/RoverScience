@@ -40,14 +40,6 @@ namespace RoverScience
 
         public void UpdateRoverScience()
         {
-            // updateRoverScience grabs values from DB
-
-            //string debugS = "";
-            //debugS += "\nupdateRS ATTEMPT: @" + DateTime.Now;
-            //debugS += "\nupdateRS - roverScience: " + roverScience;
-            //debugS += "\nupdateRS - roverScience.rover: " + roverScience.rover;
-            //Utilities.Log(debugS);
-            //debugPrintAll("update[RS] - debugPrintAll");
 
             RoverScience.levelMaxDistance = levelMaxDistance;
             RoverScience.levelPredictionAccuracy = levelPredictionAccuracy;
@@ -59,24 +51,12 @@ namespace RoverScience
                 GUI.consoleGUI.isOpen = Convert.ToBoolean(console_x_y_show[2]);
             }
 
-            
-
-
             RoverScience.rover.anomaliesAnalyzed = anomaliesAnalyzed;
-            Utilities.Log("Successfully updated RoverScience");
+            Utilities.LogVerbose("Successfully updated RoverScience");
         }
 
         public void UpdateDB()
         {
-            // updateDB grabs values from RoverScience (updates)
-
-            //string debugS = "";
-            //debugS += "\nupdateDB ATTEMPT: @" + DateTime.Now;
-            //debugS += "\nupdateDB - roverScience: " + roverScience;
-            //debugS += "\nupdateDB - roverScience.rover: " + roverScience.rover;
-            //debugS += "\nupdateDB - GUI:" + GUI;
-            //Utilities.Log(debugS);
-
             DebugPrintAll("update[DB] - debugPrintAll");
 
             levelMaxDistance = RoverScience.levelMaxDistance;
@@ -89,9 +69,9 @@ namespace RoverScience
             console_x_y_show.Add(GUI.consoleGUI.isOpen.ToString());
 
             anomaliesAnalyzed = RoverScience.rover.anomaliesAnalyzed;
-            Utilities.Log("roverScience.rover.anomaliesAnalyzed: " + RoverScience.rover.anomaliesAnalyzed);
+            Utilities.LogVerbose("roverScience.rover.anomaliesAnalyzed: " + RoverScience.rover.anomaliesAnalyzed);
 
-            Utilities.Log("Successfully updated DB");
+            Utilities.LogVerbose("Successfully updated DB");
         }
 
         public void DebugPrintAll(string title = "")
@@ -104,7 +84,7 @@ namespace RoverScience
             ds += "\nconsole_x_y_show: " + string.Join(",", console_x_y_show.ToArray());
             ds += "\nanomaliesAnalyzed: " + string.Join(",", anomaliesAnalyzed.ToArray());
             ds += "\n======================================";
-            Utilities.Log(ds);
+            Utilities.LogVerbose(ds);
         }
     }
 }

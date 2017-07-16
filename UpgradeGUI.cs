@@ -25,6 +25,12 @@ namespace RoverScience
                 return;
             }
 
+            if (roverScience.part.vessel != FlightGlobals.ActiveVessel)
+            {
+                Utilities.LogVerbose("UpgradeGUI not drawn - not active vessel");
+                return;
+            }
+
             // UPGRADE WINDOW
             GUILayout.BeginVertical();
 
@@ -68,7 +74,7 @@ namespace RoverScience
             
             if (GUILayout.Button(Localizer.GetStringByTag("#LOC_RoverScience_GUI_BtnUpgrade"))) // UP
             {
-                Utilities.Log ("Upgrade button pressed - " + upgradeType);
+                Utilities.LogVerbose ("Upgrade button pressed - " + upgradeType);
                 roverScience.UpgradeTech(upgradeType);
             }
             

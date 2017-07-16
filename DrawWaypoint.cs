@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace RoverScience
 {
@@ -27,7 +28,7 @@ namespace RoverScience
 
         private void Start()
         {
-            Utilities.Log("Attempting to create scienceSpot sphere");
+            Utilities.LogVerbose("Attempting to create scienceSpot sphere");
             Instance = this;
 
             marker = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -46,7 +47,7 @@ namespace RoverScience
             markerGreen.a = markerAlpha; // max alpha
 
             marker.GetComponent<MeshRenderer>().material.color = markerRed; // set to red on awake
-            Utilities.Log("Reached end of marker creation");
+            Utilities.LogVerbose("Reached end of marker creation");
         }
 
         public void DestroyInterestingObject()
@@ -62,7 +63,7 @@ namespace RoverScience
             Vector3 topPoint = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, 1000);
 
             double surfaceAltitude = GetSurfaceAltitude(longitude, latitude);
-            Utilities.Log("Drawing marker @ (long/lat/alt): " + longitude.ToString() + " " + latitude.ToString() + " " + surfaceAltitude.ToString());
+            Utilities.LogVerbose("Drawing marker @ (long/lat/alt): " + longitude.ToString() + " " + latitude.ToString() + " " + surfaceAltitude.ToString());
             marker.transform.position = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, surfaceAltitude);
 
             //marker.transform.up = cylinderDirectionUp;
@@ -94,17 +95,15 @@ namespace RoverScience
         public double GetSurfaceAltitude(double longitude, double latitude)
         {
             double altitude = 20000;
-            RaycastHit hit;
             Vector3d topPoint = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, altitude);
             Vector3d bottomPoint = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, -altitude);
-            
 
-            if (Physics.Raycast(topPoint, (bottomPoint - topPoint), out hit, Mathf.Infinity, 1 << 15))
+            if (Physics.Raycast(topPoint, (bottomPoint - topPoint), out RaycastHit hit, Mathf.Infinity, 1 << 15))
             {
                 return (altitude - hit.distance);
             } else
             {
-                Utilities.Log("No collision detected!");
+                Utilities.LogVerbose("No surface intersect detected!");
             }
 
             return -1;
@@ -174,7 +173,6 @@ namespace RoverScience
                 marker.GetComponent<MeshRenderer>().material.color = markerRed;
             }
 
-            //Utilities.Log("dist, dist/50, alpha: [" + distance + " / " + distance / 50 + " / " + markerAlpha + "]");
         }
 
 
@@ -182,10 +180,10 @@ namespace RoverScience
         {
             try
             {
-                Utilities.Log("Attempting to spawn object");
+                Utilities.LogVerbose("Attempting to spawn object");
                 string randomRockName = rockObjectNames[rand.Next(rockObjectNames.Length)];
                 GameObject test = GameDatabase.Instance.GetModel("RoverScience/rock/" + randomRockName);
-                Utilities.Log("Random rock name: " + randomRockName);
+                Utilities.LogVerbose("Random rock name: " + randomRockName);
                 test.SetActive(true);
 
                 interestingObject = GameObject.Instantiate(test) as GameObject;
@@ -195,9 +193,10 @@ namespace RoverScience
                 double srfAlt = DrawWaypoint.Instance.GetSurfaceAltitude(longitude, latitude);
                 interestingObject.transform.position = FlightGlobals.currentMainBody.GetWorldSurfacePosition(latitude, longitude, srfAlt);
                 interestingObject.transform.up = GetUpDown(longitude, latitude, true);
-            } catch
+            } catch (Exception e)
             {
-                Utilities.Log("rock model couldn't be found");
+                Utilities.Log($"Exception: Spawn object failed: {e.Message}");
+                Utilities.Log(e.StackTrace);
             }
         }
         

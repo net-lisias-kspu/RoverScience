@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using KSP.Localization;
 
 namespace RoverScience
@@ -64,7 +63,7 @@ namespace RoverScience
                 }
                 else
                 {
-                    Utilities.Log("ScienceSpot.Vessel null - not flight!");
+                    Utilities.LogVerbose("ScienceSpot.Vessel null - not flight!");
                     return null;
                 }
             }
@@ -96,7 +95,7 @@ namespace RoverScience
 
 		public void GenerateScience(bool anomaly = false)
 		{
-            Utilities.Log ("generateScience()");
+            Utilities.LogVerbose ("generateScience()");
 
             // anomaly flag will set a high science value
             if (anomaly)
@@ -163,8 +162,6 @@ namespace RoverScience
 
                 RoverScienceGUI.AddRandomConsoleJunk();
 
-                //Utilities.Log("" + rover.distanceCheck + " meter mark reached");
-
                 // Reroll distanceCheck value
                 Rover.distanceCheck = rand.Next(20, 50);
 					
@@ -180,9 +177,9 @@ namespace RoverScience
 
 				double chance = (chanceAlgorithm < 75) ? chanceAlgorithm : 75;
 
-                Utilities.Log ("rNum: " + rNum);
-                Utilities.Log ("chance: " + chance);
-                Utilities.Log ("rNum <= chance: " + ((double)rNum <= chance));
+                Utilities.LogVerbose ("rNum: " + rNum);
+                Utilities.LogVerbose ("chance: " + chance);
+                Utilities.LogVerbose ("rNum <= chance: " + ((double)rNum <= chance));
 					
                 // rNum is a random number between 0 and 100
                 // chance is the percentage number we check for to determine a successful roll
@@ -191,19 +188,19 @@ namespace RoverScience
                 {
 						
                     SetLocation(random: true);
-                    Utilities.Log ("setLocation");
+                    Utilities.LogVerbose ("setLocation");
 
                     RoverScienceGUI.ClearConsole();
 
-                    Utilities.Log("Distance from spot is: " + Rover.DistanceFromScienceSpot);
-                    Utilities.Log("Bearing is: " + Rover.BearingToScienceSpot);
-                    Utilities.Log("Something found");
+                    Utilities.LogVerbose("Distance from spot is: " + Rover.DistanceFromScienceSpot);
+                    Utilities.LogVerbose("Bearing is: " + Rover.BearingToScienceSpot);
+                    Utilities.LogVerbose("Something found");
 							
                 }
                 else
                 {
                     // Science hotspot not found
-                    Utilities.Log("Nothing found!");
+                    Utilities.LogVerbose("Science hotspot not found!");
                 }
 
 
@@ -300,7 +297,7 @@ namespace RoverScience
             }
 
 
-            Utilities.Log("Spot prediction attempted!");
+            Utilities.LogVerbose("Spot prediction attempted!");
         }
 
 		public void Reset()

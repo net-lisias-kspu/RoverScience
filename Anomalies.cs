@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using System.Text.RegularExpressions;
 
 namespace RoverScience
 {
@@ -26,7 +24,7 @@ namespace RoverScience
         public Anomalies()
         {
             Instance = this;
-            Utilities.Log("Attempted to load anomaly coordinates");
+            Utilities.Log("Load anomalies");
             LoadAnomalies();
         }
 
@@ -51,7 +49,7 @@ namespace RoverScience
                 return anomaliesDict[bodyName];
             } else
             {
-                Utilities.Log("###### getAnomalies KEY DOES NOT EXIST!");
+                Utilities.LogVerbose($"No anomalies for body {bodyName}");
                 return null;
             }
         }
@@ -70,23 +68,8 @@ namespace RoverScience
         private void LoadAnomalies()
         {
             // anomaliesDict contains a list of [Anomaly]s that each contain longitude/latitude, name and id
-            // load anomalies from Anomalies.cfg
             try
             {
-                // reference source from SCANsat
-                //if (anomalies == null)
-                //{
-                //    PQSSurfaceObject[] sites = body.pqsSurfaceObjects;
-                //    anomalies = new SCANanomaly[sites.Length];
-                //    for (int i = 0; i < sites.Length; ++i)
-                //    {
-                //        anomalies[i] = new SCANanomaly(sites[i].SurfaceObjectName
-                //            , body.GetLongitude(sites[i].transform.position)
-                //            , body.GetLatitude(sites[i].transform.position)
-                //            , sites[i]);
-                //    }
-                //}
-
                 Utilities.Log("Reading anomalies from game database");
                 var bodies = FlightGlobals.Bodies;
                 int counter;
@@ -114,52 +97,17 @@ namespace RoverScience
                     }
                 }
 
-
-                #region Old file based approach
-                //string fileName = KSPUtil.ApplicationRootPath + "GameData/RoverScience/Anomalies.cfg";
-                //Utilities.Log("loadAnomlies HAS ATTEMPTED TO LOAD FROM THIS PATH: " + fileName);
-
-                //ConfigNode mainNode = ConfigNode.Load(fileName);
-
-                //foreach (ConfigNode bodyNode in mainNode.GetNodes("BODY"))
-                //{
-                //    List<Anomaly> _anomalyList = new List<Anomaly>();
-
-                //    foreach (ConfigNode anomalyNode in bodyNode.GetNodes("anomaly"))
-                //    {
-                //        Anomaly _anomaly = new Anomaly();
-                //        string[] latlong = Regex.Split(anomalyNode.GetValue("position"), " : ");
-                //        _anomaly.location.latitude = Convert.ToDouble(latlong[0]);
-                //        _anomaly.location.longitude = Convert.ToDouble(latlong[1]);
-
-                //        if (anomalyNode.HasValue("name"))
-                //        {
-                //            _anomaly.name = anomalyNode.GetValue("name");
-                //        }
-
-                //        if (anomalyNode.HasValue("id"))
-                //        {
-                //            _anomaly.id = anomalyNode.GetValue("id");
-                //        }
-
-
-                //        _anomalyList.Add(_anomaly);
-                //    }
-
-                //    anomaliesDict.Add(bodyNode.GetValue("name"), _anomalyList);
-                //}
-                #endregion
-
             }
-            catch
+            catch (Exception e)
             {
-                Utilities.Log("EXCEPTION: Catch Anomaly Coordinates Problem");
+                Utilities.Log($"Exception: anomaly initialisation problem {e.Message}");
+                Utilities.Log(e.StackTrace);
             }
         }
 
         public Anomaly ClosestAnomaly(Vessel vessel, string bodyName)
         {
-            Utilities.Log("Checking for closest anomaly");
+            Utilities.LogVerbose("Checking for closest anomaly");
             if (Anomalies.Instance.HasAnomalies(bodyName))
             {
                 var anomaliesList = Anomalies.Instance.GetAnomalies(bodyName);
@@ -184,16 +132,16 @@ namespace RoverScience
                 }
 
                 distanceClosest = GeomLib.GetDistanceBetweenTwoPoints(vessel.mainBody, location, closestAnomaly.location);
-                Utilities.Log("======= RS: closest anomaly details =======");
-                Utilities.Log("long/lat: " + closestAnomaly.location.longitude + "/" + closestAnomaly.location.latitude);
-                Utilities.Log("instantaneous distance: " + distanceClosest);
-                Utilities.Log("id: " + closestAnomaly.id);
-                Utilities.Log("name: " + closestAnomaly.name);
-                Utilities.Log("=== RS: closest anomaly details <<END>>====");
+                Utilities.LogVerbose("======= RS: closest anomaly details =======");
+                Utilities.LogVerbose("long/lat: " + closestAnomaly.location.longitude + "/" + closestAnomaly.location.latitude);
+                Utilities.LogVerbose("instantaneous distance: " + distanceClosest);
+                Utilities.LogVerbose("id: " + closestAnomaly.id);
+                Utilities.LogVerbose("name: " + closestAnomaly.name);
+                Utilities.LogVerbose("=== RS: closest anomaly details <<END>>====");
 
                 return closestAnomaly;
             }
-            Utilities.Log("No anomalies found for " + bodyName);
+            Utilities.LogVerbose("No anomalies found for " + bodyName);
             return new Anomaly();
         }
     }

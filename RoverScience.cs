@@ -68,7 +68,7 @@ namespace RoverScience
 				if (HighLogic.LoadedSceneIsFlight) {
 					return FlightGlobals.ActiveVessel;
 				} else {
-                    Utilities.Log ("RoverScience.Vessel null! - not flight");
+                    Utilities.LogVerbose ("RoverScience.Vessel null! - not flight");
 					return null;
 				}
 			}
@@ -119,7 +119,7 @@ namespace RoverScience
 
 		void OnDestroy ()
 		{
-            Utilities.Log ("RoverScience OnDestroy()");
+            Utilities.LogVerbose ("RoverScience OnDestroy()");
 		}
 
         public void OnGUI()
@@ -129,32 +129,22 @@ namespace RoverScience
 
         public override void OnLoad (ConfigNode vesselNode)
         {
-            Utilities.Log("#X1 RoverScience OnLoad @" + DateTime.Now);
+            Utilities.LogVerbose("#X1 RoverScience OnLoad @" + DateTime.Now);
             Instance = this;
 
             if (rover == null)
             {
-                Utilities.Log("rover was null, creating new rover class (OnLoad)");
+                Utilities.LogVerbose("rover was null, creating new rover class (OnLoad)");
                 rover = new Rover();
             }
-
-           // try
-            //{
             if (DB != null)  DB.UpdateRoverScience();
-            //}catch{
-            //}
 
         }
 
         public override void OnSave(ConfigNode vesselNode)
         {
-            Utilities.Log("RoverScience OnSave @" + DateTime.Now);
-            // try
-            // {
+            Utilities.LogVerbose("RoverScience OnSave @" + DateTime.Now);
             if (DB != null) DB.UpdateDB();
-            //} catch
-            //{
-            //}
         }
 
 
@@ -169,7 +159,7 @@ namespace RoverScience
 	
 					Instance = this;
 
-                    Utilities.Log ("RS Instance set - " + Instance);
+                    Utilities.LogVerbose ("RS Instance set - " + Instance);
 
                     HomeWorld = FlightGlobals.Bodies.Where(cb => cb.isHomeWorld).First(); // TODO: move this somewhere more appropriate
 
@@ -179,17 +169,13 @@ namespace RoverScience
                     // HACK: Must be called here otherwise they won't run their constructors for some reason
                     if (rover == null)
                     {
-                        Utilities.Log("rover was null, creating new rover class (OnStart)");
+                        Utilities.LogVerbose("rover was null, creating new rover class (OnStart)");
                         rover = new Rover();
                     }
 					rover.scienceSpot = new ScienceSpot (Instance);
 					rover.landingSpot = new LandingSpot (Instance);
 
-                    //try
-                    //{
                     if (DB != null) DB.UpdateRoverScience();
-                    //}
-                    //catch { }
 
                     rover.SetClosestAnomaly();
 
@@ -247,34 +233,34 @@ namespace RoverScience
 				// Divide by 20 to convert to data form
 				float sciData = (rover.scienceSpot.potentialScience) / sciSubject.subjectValue;
 
-                Utilities.Log ("sciData (potential/20): " + sciData);
+                Utilities.LogVerbose ("sciData (potential/20): " + sciData);
 
 
                 // Apply multipliers
 
                 if (rover.AnomalySpotReached)
                 {
-                    Utilities.Log("RS: added anomaly id to save!");
-                    Utilities.Log("RS: analyzed science at anomaly");
+                    Utilities.LogVerbose("analyzed science at anomaly");
 
                     if (!rover.anomaliesAnalyzed.Contains(rover.closestAnomaly.id))
                     {
                         rover.anomaliesAnalyzed.Add(rover.closestAnomaly.id);
+                        Utilities.LogVerbose($"added anomaly id: {rover.closestAnomaly.id} to save!");
                     }
 
                 } else
                 {
                     // if a normal spot, we shall apply factors
-                    Utilities.Log("RS: analyzed science at science spot");
+                    Utilities.LogVerbose("analyzed science at science spot");
                     sciData = sciData * ScienceDecayScalar * BodyScienceScalar * scienceMaxRadiusBoost;
                 }
 
 
 
-                Utilities.Log("RS: rover.scienceSpot.potentialScience: " + rover.scienceSpot.potentialScience);
-                Utilities.Log("RS: sciData (post scalar): " + sciData);
-                Utilities.Log("RS: scienceDecayScalar: " + ScienceDecayScalar);
-                Utilities.Log("RS: bodyScienceScalar: " + BodyScienceScalar);
+                Utilities.LogVerbose("rover.scienceSpot.potentialScience: " + rover.scienceSpot.potentialScience);
+                Utilities.LogVerbose("sciData (post scalar): " + sciData);
+                Utilities.LogVerbose("scienceDecayScalar: " + ScienceDecayScalar);
+                Utilities.LogVerbose("bodyScienceScalar: " + BodyScienceScalar);
                
 				
 
@@ -282,7 +268,7 @@ namespace RoverScience
 					if (StoreScience (container, sciSubject, sciData)) {
 						container.ReviewData ();
                         amountOfTimesAnalyzed++;
-                        Utilities.Log ("Science retrieved! - " + sciData);
+                        Utilities.LogVerbose ("Science retrieved! - " + sciData);
 					} else {
                         Utilities.Log ("Failed to add science to container!");
 					}
@@ -294,7 +280,7 @@ namespace RoverScience
 				rover.scienceSpot.Reset ();
 
 			} else {
-                Utilities.Log ("Tried to analyze while not at spot?");
+                Utilities.LogVerbose ("Tried to analyze while not at spot?");
 			}
 		}
 
@@ -553,7 +539,7 @@ namespace RoverScience
 
         public void UpgradeTech(RSUpgrade upgradeType)
         {
-			Utilities.Log ("upgradeTech called: " + upgradeType);
+			Utilities.LogVerbose ("upgradeTech called: " + upgradeType);
             int nextLevel = GetUpgradeLevel(upgradeType) + 1;
             int currentLevel = GetUpgradeLevel(upgradeType);
             int maxLevel = GetUpgradeMaxLevel(upgradeType);
@@ -577,14 +563,14 @@ namespace RoverScience
             // UPGRADE METHOD
 			if (upgradeType == RSUpgrade.maxDistance) {
 				levelMaxDistance++;
-                Utilities.Log ("Upgraded levelMaxDistance. Now level: " + levelMaxDistance);
+                Utilities.LogVerbose ("Upgraded levelMaxDistance. Now level: " + levelMaxDistance);
 			} else if (upgradeType == RSUpgrade.predictionAccuracy) {
 				levelPredictionAccuracy++;
-                Utilities.Log ("Upgraded predictionAccuracy. Now level: " + levelPredictionAccuracy);
+                Utilities.LogVerbose ("Upgraded predictionAccuracy. Now level: " + levelPredictionAccuracy);
 			} else if (upgradeType == RSUpgrade.analyzedDecay)
             {
                 levelAnalyzedDecay++;
-                Utilities.Log("Upgraded levelAnalyzedDecay. Now level: " + levelAnalyzedDecay);
+                Utilities.LogVerbose("Upgraded levelAnalyzedDecay. Now level: " + levelAnalyzedDecay);
             }
             
             ResearchAndDevelopment.Instance.CheatAddScience(-nextCost);

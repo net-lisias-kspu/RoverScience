@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RoverScience
 {
@@ -13,11 +11,10 @@ namespace RoverScience
             Debug.Log($"[RoverScience]: {msg}");
         }
 
-        public static void LogInfo(string msg)
+        public static void LogVerbose(string msg)
         {
-#if VERBOSELOGGING
-            Debug.Log($"[RoverScience]: {msg}");
-#endif
+            if (HighLogic.CurrentGame?.Parameters?.CustomParams<RoverScienceParameters>() == null || HighLogic.CurrentGame.Parameters.CustomParams<RoverScienceParameters>().verboseLogging)
+                Debug.Log($"[RoverScience]: {msg}");
         }
 
     }

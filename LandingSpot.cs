@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace RoverScience
+﻿namespace RoverScience
 {
 
     public class LandingSpot
@@ -33,7 +31,7 @@ namespace RoverScience
                 }
                 else
                 {
-                    Utilities.Log("LandingSpot.Vessel null - not flight");
+                    Utilities.LogVerbose("LandingSpot.Vessel null - not flight");
                     return null;
                 }
             }
@@ -56,7 +54,7 @@ namespace RoverScience
 
 	                    established = true;
 
-                        Utilities.Log("Landing site has been established!");
+                        Utilities.LogVerbose("Landing site has been established!");
 
                         Rover.SetClosestAnomaly();
 	                }
@@ -78,7 +76,7 @@ namespace RoverScience
 
             Rover.ResetDistanceTraveled();
             Rover.distanceTraveledTotal = 0;
-            Utilities.Log("Landing Spot reset!");
+            Utilities.LogVerbose("Landing Spot reset!");
         }
     }
 }
