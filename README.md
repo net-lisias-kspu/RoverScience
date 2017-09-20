@@ -72,6 +72,7 @@ Initially, rovers are only able to analyze **two** science spots before beginnin
 * [akron](http://forum.kerbalspaceprogram.com/index.php?/profile/116554-akron/) for Rover Brain parts - modelling and texturing
 * Nat Sum for rock models!
 * Spanish translation by [fitiales](http://forum.kerbalspaceprogram.com/index.php?/profile/66011-fitiales/)
+* German translation by [Three_Pounds](https://forum.kerbalspaceprogram.com/index.php?/profile/116058-three_pounds/)
 
 ## License
 
