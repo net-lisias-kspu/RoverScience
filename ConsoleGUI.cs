@@ -1,5 +1,6 @@
 ﻿using KSP.Localization;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -15,46 +16,25 @@ namespace RoverScience
         private bool analyzeButtonPressedOnce = false;
 		private string inputMaxDistance = "100";
 
-        private string SetRichColor(string s, string color)
+        private Dictionary<string, string> RichColors = new Dictionary<string, string>
         {
-            // color to be inputted as "#xxxxxx";
-            if (color == "green")
-            {
-                color = "#00ff00ff";
-            }
-            else if (color == "red")
-            {
-                color = "#ff0000ff";
-            } else if (color == "blue")
-            {
-                color = "#add8e6ff";
-            } else if (color == "yellow")
-            {
-                color = "#ffff00ff";
-            } else if (color == "orange")
-            {
-                color = "#ffa500ff";
-            }
+            { "green", "<color=#00ff00ff>" },
+            { "red", "<color=#ff0000ff>" },
+            { "blue", "<color=#add8e6ff>" },
+            { "yellow", "<color=#ffff00ff>" },
+            { "orange", "<color=#ffa500ff>" },
 
-            return ("<color=" + color + ">" + s + "</color>");
-        }
+            { "Very High!", "<color=#00ff00ff>" },
+            { "High", "<color=#00ff00ff>" },
+            { "Normal", "<color=#add8e6ff>" },
+            { "Low", "<color=#ffff00ff>" }
+            
+        };
 
-        private string PotentialFontColor(string name)
-        {
-            if (name == "Very High!" || name == "High")
-            {
-                return SetRichColor(name, "green");
-            } else if (name == "Normal")
-            {
-                return SetRichColor(name, "blue");
-            } else if (name == "Low")
-            {
-                return SetRichColor(name, "yellow");
-            } else
-            {
-                return SetRichColor(name, "red");
-            }
-        }
+        private string SetRichColor(string s, string color) => $"{RichColors[color]}{s}</color>";
+
+        private string PotentialFontColor(string name) 
+            => RichColors.ContainsKey(name) ? SetRichColor(name, name) : SetRichColor(name, "red");
 
         private string PredictionFontColor(double percentage)
         {

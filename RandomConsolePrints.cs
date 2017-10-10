@@ -9,17 +9,15 @@ namespace RoverScience
 		public class RandomConsolePrintOuts
 		{
 			List<string> strings = new List<string>();
+            System.Random rand = new System.Random();
 
 			public string GetRandomPrint()
 			{
-				System.Random rand = new System.Random();
+                if (strings.Count == 0)
+                    return Localizer.GetStringByTag("#LOC_RoverScience_GUI_Random1"); // "Nothing seems to be here";
+
 				int randIndex = rand.Next (0, strings.Count);
-
-				if (strings.Count > 0) {
-					return strings [randIndex];
-				}
-
-                return Localizer.GetStringByTag("#LOC_RoverScience_GUI_Random1"); // "Nothing seems to be here";
+				return strings [randIndex];
 			}
 
 			public RandomConsolePrintOuts()

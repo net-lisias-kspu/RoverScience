@@ -147,10 +147,6 @@ namespace RoverScience
             if (DB != null) DB.UpdateDB();
         }
 
-
-
-
-
         public override void OnStart (PartModule.StartState state)
 		{
 			if (HighLogic.LoadedSceneIsFlight) {

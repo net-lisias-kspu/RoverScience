@@ -56,14 +56,9 @@ namespace RoverScience
             GUILayout.EndHorizontal();
             GUILayout.Label("anomaly id visited: " + string.Join(",", Rover.anomaliesAnalyzed.ToArray()));
 
-
-
-
 			if (GUILayout.Button ("Find Science Spot")) {
 				Rover.scienceSpot.SetLocation (random: true);
 			}
-            
-
 
             if (GUILayout.Button ("Cheat Spot Here")) {
 				if ((!Rover.scienceSpot.established) && (consoleGUI.isOpen)) {

@@ -24,7 +24,6 @@ namespace RoverScience
         public Anomalies()
         {
             Instance = this;
-            Utilities.Log("Load anomalies");
             LoadAnomalies();
         }
 

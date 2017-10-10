@@ -12,7 +12,7 @@ namespace RoverScience
             if (first)
             {
                 first = false;
-                HighLogic.SaveFolder = "default";
+                HighLogic.SaveFolder = "RSDebug";
                 var game = GamePersistence.LoadGame("persistent", HighLogic.SaveFolder, true, false);
                 if (game != null && game.flightState != null && game.compatible)
                 {

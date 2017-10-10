@@ -123,7 +123,7 @@ namespace RoverScience
                 {
                     Utilities.LogVerbose("ID: " + s);
                 }
-                Utilities.LogVerbose("ID LOAD END");
+                Utilities.LogVerbose("Anomalies LOAD END");
                 RoverScienceDB.Instance.anomaliesAnalyzed = loadedStringList; // load in new values in anomalies
                 
             }

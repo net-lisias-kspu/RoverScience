@@ -24,98 +24,32 @@ namespace RoverScience
         public Anomalies.Anomaly closestAnomaly = new Anomalies.Anomaly();
 
 		public double DistanceFromLandingSpot
-		{
-			get{
-				return GeomLib.GetDistanceBetweenTwoPoints (Vessel.mainBody, location, landingSpot.location);
-			}
-		}
+    		=> GeomLib.GetDistanceBetweenTwoPoints (Vessel.mainBody, location, landingSpot.location);
 
 		public double DistanceFromScienceSpot
-		{
-			get{
-                return GeomLib.GetDistanceBetweenTwoPoints(Vessel.mainBody, location, scienceSpot.location);
-			}
-		}
+	    	=> GeomLib.GetDistanceBetweenTwoPoints(Vessel.mainBody, location, scienceSpot.location);
 
 		public double BearingToScienceSpot
-		{
-			get {
-                return GeomLib.GetBearingFromCoords(scienceSpot.location, location);
-			}
-		}   
+            => GeomLib.GetBearingFromCoords(scienceSpot.location, location);
 
-		Vessel Vessel
-		{
-			get{
-				return FlightGlobals.ActiveVessel;
-			}
-		}
+		Vessel Vessel => FlightGlobals.ActiveVessel;
 
-		public double Heading
-		{
-			get{
-				return GeomLib.GetRoverHeading (Vessel);
-			}
-		}
+		public double Heading => GeomLib.GetRoverHeading (Vessel);
 
-		public bool ScienceSpotReached
-		{
-			get {
-				if (scienceSpot.established) {
-					if (DistanceFromScienceSpot <= scienceSpot.minDistance) {
-						return true;
-					}
-				}
-				return false;
-			}
-		}
+        public bool ScienceSpotReached
+            => (scienceSpot.established && DistanceFromScienceSpot <= scienceSpot.minDistance);
 
         public bool AnomalySpotReached
-        {
-            get
-            {
-                if (scienceSpot.established)
-                {
-                    if (DistanceToClosestAnomaly <= scienceSpot.minDistance)
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        }
+            => (scienceSpot.established && DistanceToClosestAnomaly <= scienceSpot.minDistance);
 
         public bool AnomalyPresent
-        {
-            get
-            {
-                return ((DistanceToClosestAnomaly <= 100) && !Anomalies.Instance.HasCurrentAnomalyBeenAnalyzed());
-            }
-        }
+            => ((DistanceToClosestAnomaly <= 100) && !Anomalies.Instance.HasCurrentAnomalyBeenAnalyzed());
 
-        public int NumberWheelsLanded
-		{
-			get
-			{
-				return GetWheelsLanded();
-			}
-		}
+        public int NumberWheelsLanded => GetWheelsLanded();
 
-        public int NumberWheels
-        {
-            get
-            {
-                return GetWheelCount();
-            }
-        }
+        public int NumberWheels => GetWheelCount();
 
-        public bool ValidStatus
-        {
-            get
-            {
-                return CheckRoverValidStatus();
-            }
-        }
+        public bool ValidStatus => CheckRoverValidStatus();
 
         public double DistanceToClosestAnomaly
         {
