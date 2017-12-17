@@ -213,7 +213,5 @@ namespace RoverScience
             Destroy(marker);
             DestroyInterestingObject();
         }
-
-
     }
 }
