@@ -1,5 +1,9 @@
 # Rover Science :: Change Log
 
+* 2016-0919: 2.1.3 (theSpeare) for KSP 1.1.3
+	+ 17 should now be fully fixed. Furthermore, saving/loading should be fine now.
+	+ No more coding to be done until KSP1.2 is fully out, as I'm a bit tired of having to keep adapting between both versions. Will refactor as soon as I update for KSP1.2.
+	+ Next update will only be for a new part model.
 * 2016-0915: 2.1.2 (theSpeare) for KSP 1.1.3
 	+ Made GUI prettier. Now with colours and revised text to improve
 	+ understandability.
