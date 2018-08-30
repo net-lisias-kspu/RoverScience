@@ -1,5 +1,13 @@
 # Rover Science :: Change Log
 
+* 2016-0925: 2.1.4 (theSpeare) for KSP 1.1.3
+	+ New part models
+	+ Model and texturing by KSPForum @akron. Wonderful work and wonderful guy. Thanks!
+		- [Image](http://i.imgur.com/gZFbkjC.png)
+			- MiniAVC Implementation
+	+ Added MiniAVC support. Will compare with GitHub pushed version file.
+			- Initial Minor Balancing Pass
+			- Changed so that amount of times analyzed does not increase for generated science that is too low. There will be more balancing to come as discussion continues in the forum page.
 * 2016-0919: 2.1.3 (theSpeare) for KSP 1.1.3
 	+ 17 should now be fully fixed. Furthermore, saving/loading should be fine now.
 	+ No more coding to be done until KSP1.2 is fully out, as I'm a bit tired of having to keep adapting between both versions. Will refactor as soon as I update for KSP1.2.
