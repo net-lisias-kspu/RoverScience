@@ -1,5 +1,13 @@
 # Rover Science :: Change Log
 
+* 2017-0709: 2.3.2 (Aelfheim) for KSP 1.3.0
+	+ Spanish translation by [fitiales](http://forum.kerbalspaceprogram.com/index.php?/profile/66011-fitiales/)
+	+ Read anomaly information directly from game database rather than config file. Should support dynamic and mod added anomalies.
+	+ Module Manager patch to add RoverBrain module to popular rover cabs without the need to attach the separate part.
+	+ Known Issues:
+			- Trying to open the rover terminal while there are two (or more) vessels with rover brains in physics range causes exception spam
+			- Drawing of  science spots (red domes) is sometimes a bit glitchy. Can usually be fixed by switching to another vessel (or Space Centre) and then back again.
+			- Upgrade and anomalies scanned information is not always reliably written to save file.
 * 2017-0704: 2.3.1 (Aelfheim) for KSP 1.3
 	+ Add support for localization (only en-us supplied by default)
 	+ Clicking "Upgrade menu" button in sandbox mode no longer throws NRE spam.
