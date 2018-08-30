@@ -1,5 +1,9 @@
 # Rover Science :: Change Log
 
+* 2017-0704: 2.3.1 (Aelfheim) for KSP 1.3
+	+ Add support for localization (only en-us supplied by default)
+	+ Clicking "Upgrade menu" button in sandbox mode no longer throws NRE spam.
+	+ Update AVC version file to point to this repository
 * 2017-0704: 2.3.0 (Aelfheim) for KSP 1.3
 	+ Compatibility update for KSP 1.3
 * 2016-1014: 2.2.0-A1 (theSpeare) for KSP 1.2.1 PRE-RELEASE
