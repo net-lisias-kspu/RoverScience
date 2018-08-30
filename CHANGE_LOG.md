@@ -1,5 +1,7 @@
 # Rover Science :: Change Log
 
+* 2016-1106: 2.2.0 (theSpeare) for KSP 1.2.1
+	+ compatibility with KSP 1.2.1
 * 2016-0925: 2.1.4 (theSpeare) for KSP 1.1.3
 	+ New part models
 	+ Model and texturing by KSPForum @akron. Wonderful work and wonderful guy. Thanks!
