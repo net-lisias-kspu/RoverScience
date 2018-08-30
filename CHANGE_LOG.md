@@ -1,5 +1,9 @@
 # Rover Science :: Change Log
 
+* 2016-1014: 2.2.0-A1 (theSpeare) for KSP 1.2.1 PRE-RELEASE
+	+ RoverScience should be compatible for KSP1.2 now. Fixed all the issues with values not being saved/loaded, but it's all pretty shaky coding so (as I've said on the forums) I'm going to rewrite this mod from the ground up now. Should make it easier for others to understand the code and also (if anyone ever wanted to) take over in the future.
+	+ THIS IS A PRE-RELEASE ALPHA. I've tested it and nothing seems to break the game (running without RoverScience, running with RoverScience part), but I need help confirming this before I push an official release out to SpaceDock and CKAN and such.
+	+ Any help is greatly appreciated.
 * 2016-1106: 2.2.0 (theSpeare) for KSP 1.2.1
 	+ compatibility with KSP 1.2.1
 * 2016-0925: 2.1.4 (theSpeare) for KSP 1.1.3
