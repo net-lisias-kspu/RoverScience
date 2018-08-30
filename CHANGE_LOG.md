@@ -1,5 +1,7 @@
 # Rover Science :: Change Log
 
+* 2018-0330: 2.3.5 (Aelfheim) for KSP 1.4.1
+	+ recompile for KSP 1.4.x
 * 2017-1010: 2.3.3 (Aelfheim) for KSP 1.3.1
 	+ Recompile for KSP 1.3.1 (*not compatible with earlier versions*)
 	+ German translation by [Three_Pounds](https://forum.kerbalspaceprogram.com/index.php?/profile/116058-three_pounds/)
