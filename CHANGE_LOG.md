@@ -1,5 +1,15 @@
 # Rover Science :: Change Log
 
+* 2016-0913: 2.1 (theSpeare) for KSP 1.1.3
+	+ Interesting Rocks
+	+ Rock models are now spawned at Science Spots. Two different models are included; more will be added later. Credit to udk_lethal_dose for the idea. Textures are a bit big; will look at compressing these further.
+	+ Anomalies
+	+ Anomalies are now recognized! Credit to etmoonshade for the idea.
+	+ ScienceSpots will generate at anomalies once rovers are within 100m and no other scienceSpots are active.
+	+ Anomalies provide a flat 300 science points (500, if you're lucky). However you can only analyze an anomaly ONCE.
+	+ Most anomalies have been charted, except for two Duna ones that do not
+	+ appear above ground anymore.
+	+ Go send your rovers out to those anomalies!
 * 2016-0910: 2.0.4 (theSpeare) for KSP 1.1.3
 	+ fixed: fixed previous code that had an "if Instance=null". It is now
 		- Instance == null" because I am an idiot. This was a mod-breaking issue,
