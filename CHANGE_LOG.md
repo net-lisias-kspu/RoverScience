@@ -1,5 +1,10 @@
 # Rover Science :: Change Log
 
+* 2017-1010: 2.3.3 (Aelfheim) for KSP 1.3.1
+	+ Recompile for KSP 1.3.1 (*not compatible with earlier versions*)
+	+ German translation by [Three_Pounds](https://forum.kerbalspaceprogram.com/index.php?/profile/116058-three_pounds/)
+	+ Minor changes to logging. Fewer messages unless "verbose logging" is enabled in system settings.
+	+ Minor code refactoring and code style updates.
 * 2017-0709: 2.3.2 (Aelfheim) for KSP 1.3.0
 	+ Spanish translation by [fitiales](http://forum.kerbalspaceprogram.com/index.php?/profile/66011-fitiales/)
 	+ Read anomaly information directly from game database rather than config file. Should support dynamic and mod added anomalies.
