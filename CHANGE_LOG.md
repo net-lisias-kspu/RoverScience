@@ -1,5 +1,11 @@
 # Rover Science :: Change Log
 
+* 2016-0910: 2.0.4 (theSpeare) for KSP 1.1.3
+	+ fixed: fixed previous code that had an "if Instance=null". It is now
+		- Instance == null" because I am an idiot. This was a mod-breaking issue,
+	+ so hopefully GUI should be working now!
+			- learned how to raycast to get surface altitude, reverted back to
+			- sphere marker as it waaaaaay good
 * 2016-0908: 2.0.3 (theSpeare) for KSP 1.1.3 PRE-RELEASE
 	+ An attempted fix as detailed on issue #1.
 	+ (from release 2.0.2) major feature:
