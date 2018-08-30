@@ -1,5 +1,12 @@
 # Rover Science :: Change Log
 
+* 2016-0915: 2.1.2 (theSpeare) for KSP 1.1.3
+	+ Made GUI prettier. Now with colours and revised text to improve
+	+ understandability.
+	+ Added new upgrade: "analyzedDecay". Upgrading this will increase the
+	+ number of times a player may analyze before suffering science loss.
+	+ Quickloading and quicksaving will now restore window positions. GUI
+	+ position and display status is now saved in persistence & quicksave.
 * 2016-0913: 2.1 (theSpeare) for KSP 1.1.3
 	+ Interesting Rocks
 	+ Rock models are now spawned at Science Spots. Two different models are included; more will be added later. Credit to udk_lethal_dose for the idea. Textures are a bit big; will look at compressing these further.
