@@ -6,6 +6,7 @@
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{65FCE581-3004-46CC-AEB5-EFB31A08A68D}</ProjectGuid>
+    <BaseIntermediateOutputPath>../../obj</BaseIntermediateOutputPath>
     <OutputType>Library</OutputType>
     <RootNamespace>RoverScience</RootNamespace>
     <AssemblyName>RoverScience</AssemblyName>
@@ -16,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\..\bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,29 +26,25 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\..\bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KSP\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KSP\KSP_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\LIB\managed\1.4.1\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KSP\KSP_Data\Managed\UnityEngine.UI.dll</HintPath>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\..\LIB\managed\1.4.1\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\LIB\managed\1.4.1\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Anomalies.cs" />
-    <Compile Include="Coords.cs" />
     <Compile Include="DrawWaypoint.cs" />
     <Compile Include="GeomLib.cs" />
     <Compile Include="LandingSpot.cs" />
@@ -69,23 +66,13 @@
     <Compile Include="DebugSkipMenu.cs" />
     <Compile Include="UpgradeGUI.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="COORDS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>rd /s /q "$(SolutionDir)\..\KSP\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\KSP en\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\KSP es\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\KSP ja\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\KSP zh\GameData\RoverScience"
-rd /s /q "$(SolutionDir)\..\KSP ru\GameData\RoverScience"</PreBuildEvent>
+    <PreBuildEvent></PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetDir)RoverScience.dll"  "$(SolutionDir)GameData\RoverScience" /Y
-(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP en\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP es\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP ru\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP jp\GameData\RoverScience" /E /V) 
-(robocopy "$(SolutionDir)GameData\RoverScience"  "$(SolutionDir)..\KSP zh\GameData\RoverScience" /E /V) ^&amp; exit 0</PostBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
   </PropertyGroup>
 </Project>
