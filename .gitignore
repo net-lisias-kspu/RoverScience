@@ -1,4 +1,9 @@
 .vs
 bin
 obj
+GameData/**/*.version
+GameData/**/README.md
+GameData/**/LICENSE
+GameData/**/CHANGE_LOG.md
+GameData/**/*.dll
 Source/**/Properties/Version.cs
