@@ -45,11 +45,15 @@ namespace RoverScience
             RoverScience.levelPredictionAccuracy = levelPredictionAccuracy;
             RoverScience.levelAnalyzedDecay = levelAnalyzedDecay;
 
-            if (console_x_y_show.Any())
+            if (console_x_y_show.Any()) try
             {
                 GUI.SetWindowPos(GUI.consoleGUI, (float)Convert.ToDouble(console_x_y_show[0]), (float)Convert.ToDouble(console_x_y_show[1]));
                 GUI.consoleGUI.isOpen = Convert.ToBoolean(console_x_y_show[2]);
             }
+			catch (Exception e)
+			{
+				Utilities.LogError($"Error while parsing {console_x_y_show}", e);
+			}
 
             RoverScience.rover.anomaliesAnalyzed = anomaliesAnalyzed;
             Utilities.LogVerbose("Successfully updated RoverScience");
