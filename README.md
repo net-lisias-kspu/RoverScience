@@ -83,7 +83,7 @@ Initially, rovers are only able to analyze **two** science spots before beginnin
 
 ## Installation
 
-In your KSP GameData folder, delete any existing EditorExtensions folder. Download the zip file to your KSP GameData folder and unzip.﻿
+In your KSP GameData folder, delete any existing `RoverScience` folder. Download the zip file to your KSP GameData folder and unzip.﻿
 
 ### Dependencies
 
