@@ -7,11 +7,11 @@ Original mod by theSpeare continued by Aelfhe1m. Unofficial fork by Lisias.
 
 ## In a Hurry
 
-* [Releases](https://github.com/net-lisias-kspu/RoverScience/tree/Archive)
-* [Source](https://github.com/net-lisias-kspu/RoverScience)
 * [Latest Release](https://github.com/net-lisias-kspu/RoverScience/releases)
+	+ [Binaries](https://github.com/net-lisias-kspu/RoverScience/tree/Archive)
+* [Source](https://github.com/net-lisias-kspu/RoverScience)
 * [Change Log](./CHANGE_LOG.md)
- 
+
 
 ## Description
 
