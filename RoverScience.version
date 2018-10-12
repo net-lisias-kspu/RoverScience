@@ -1,14 +1,14 @@
 {
-	"NAME":		"Rover Science Unofficial",
-	"URL":		"https://raw.githubusercontent.com/net-lisias-kspu/RoverScience/master/ToadicusTools.version",
-	"DOWNLOAD":	"https://github.com/net-lisias-kspu/RoverScience/releases",
-	"CHANGE_LOG":	"https://raw.githubusercontent.com/net-lisias-kspu/RoverScience/CHANGE_LOG.md",
-	"CHANGE_LOG_URL":"https://raw.githubusercontent.com/net-lisias-kspu/RoverScience/CHANGES.md",
 	"GITHUB":{
 		"USERNAME":"net-lisias-kspu",
 		"REPOSITORY":"RoverScience",
 		"ALLOW_PRE_RELEASE":false
 		},
+	"NAME"		: "Rover Science Unofficial",
+	"URL"		: "https://raw.githubusercontent.com/net-lisias-kspu/RoverScience/master/ToadicusTools.version",
+	"DOWNLOAD"	: "https://github.com/net-lisias-kspu/RoverScience/releases",
+	"CHANGE_LOG"	: "https://raw.githubusercontent.com/net-lisias-kspu/RoverScience/CHANGE_LOG.md",
+	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/net-lisias-kspu/RoverScience/CHANGES.md",
 	"VERSION":{
 		"MAJOR":2,
 		"MINOR":3,
